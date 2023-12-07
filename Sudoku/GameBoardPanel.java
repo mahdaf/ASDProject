@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 public class GameBoardPanel extends JPanel{
     private static final long serialVersionUID = 1L;  // to prevent serial warning
     private String playerName;
+
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
@@ -58,6 +59,7 @@ public class GameBoardPanel extends JPanel{
         }
 
         super.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
+        
     }
 
     /**
