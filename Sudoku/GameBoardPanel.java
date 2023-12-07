@@ -1,13 +1,24 @@
 package Sudoku;
-
+/**
+ * ES234317-Algorithm and Data Structures
+ * Semester Ganjil, 2023/2024
+ * Group Capstone Project
+ * Group #1
+ * 1 - 5026221013 - Andika Cahya Sutisna
+ * 2 - 5026221129 - Muhammad Ahdaf Amali
+ * 3 - 5026221170 - Putu Panji Wiradharma
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameBoardPanel extends JPanel {
+public class GameBoardPanel extends JPanel{
     private static final long serialVersionUID = 1L;  // to prevent serial warning
-
+    private String playerName;
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
     // Define named constants for UI sizes
     public static final int CELL_SIZE = 60;   // Cell width/height in pixels
     public static final int BOARD_WIDTH  = CELL_SIZE * SudokuConstants.GRID_SIZE;
@@ -112,7 +123,32 @@ public class GameBoardPanel extends JPanel {
              *   by calling isSolved(). Put up a congratulation JOptionPane if so.
              */
             if (isSolved()) {
-                JOptionPane.showMessageDialog(null, "Congratulations!");
+                // JOptionPane.showMessageDialog(null, "Congratulations!");
+                //JOptionPane.showOptionDialog(null, "Pilih ukuran board", "Ukuran Board", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+                Object[] opsi = {"Yes", "No"};
+
+                // Menampilkan dialog dengan opsi dan mendapatkan nilai kembaliannya
+                int pilihan = JOptionPane.showOptionDialog(
+                        null, // Komponen induk (null untuk dialog tengah layar)
+                        "Do you wanna play again?", // Pesan dialog
+                        "Congratulations! " + playerName, // Judul dialog
+                        JOptionPane.DEFAULT_OPTION, // Tipe ikon (DEFAULT_OPTION untuk ikon default)
+                        JOptionPane.QUESTION_MESSAGE, // Tipe pesan (QUESTION_MESSAGE untuk pertanyaan)
+                        null, // Icon kustom (null untuk ikon default)
+                        opsi, // Daftar opsi
+                        opsi[0]); // Opsi default yang terpilih
+        
+                // Menggunakan nilai kembaliannya untuk menentukan tindakan selanjutnya
+                if (pilihan == JOptionPane.CLOSED_OPTION) {
+                    System.out.println("Dialog ditutup tanpa pemilihan.");
+                    System.exit(0);
+                } else if (opsi[pilihan]==opsi[0]){
+                    newGame();
+
+                } else {
+                   JOptionPane.showMessageDialog(null, "Thank you for playing");
+                   System.exit(0);
+                }
             }
         }
     }

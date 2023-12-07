@@ -1,17 +1,32 @@
 package Sudoku;
-
+/**
+ * ES234317-Algorithm and Data Structures
+ * Semester Ganjil, 2023/2024
+ * Group Capstone Project
+ * Group #1
+ * 1 - 5026221013 - Andika Cahya Sutisna
+ * 2 - 5026221129 - Muhammad Ahdaf Amali
+ * 3 - 5026221170 - Putu Panji Wiradharma
+ */
 import javax.swing.*;
 import java.awt.*;
 
 public class Main extends JFrame {
     private static final long serialVersionUID = 1L;  // to prevent serial warning
-
+    private String playerName;
     // private variables
     GameBoardPanel board = new GameBoardPanel();
     JButton btnNewGame = new JButton("New Game");
-
+    
+    public String getPlayerName() {
+            return playerName;
+        }
     // Constructor
     public Main() {
+        
+        // Meminta input nama pemain
+        playerName = JOptionPane.showInputDialog("Masukkan nama Player:");
+        board.setPlayerName(playerName);
         Container cp = getContentPane();
         cp.setLayout(new BorderLayout());
 
