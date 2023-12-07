@@ -28,7 +28,7 @@ public class Main extends JFrame {
     public static final int CELL_PADDING = CELL_SIZE / 5;
     public static final int SYMBOL_SIZE = CELL_SIZE - CELL_PADDING * 2; // width/height
     public static final int SYMBOL_STROKE_WIDTH = 8; // pen's stroke width
-    public static final Color COLOR_BG = Color.WHITE;  // background
+    public static final Color COLOR_BG = Color.BLACK;  // background
     public static final Color COLOR_BG_STATUS = new Color(216, 216, 216);
     public static final Color COLOR_GRID = Color.LIGHT_GRAY;  // grid lines
     public static final Color COLOR_CROSS = new Color(225, 40, 96);  // Red #D32D41
@@ -76,7 +76,7 @@ public class Main extends JFrame {
         // Meminta input nama pemain 1
         player1Name = JOptionPane.showInputDialog("Masukkan nama Player 1:");
         // Meminta input nama pemain 2
-        player1Name = JOptionPane.showInputDialog("Masukkan nama Player 2:");
+        player2Name = JOptionPane.showInputDialog("Masukkan nama Player 2:");
 
         // Set up GUI components
         gamePanel = new GamePanel();  // Construct a drawing canvas (a JPanel)
@@ -162,17 +162,27 @@ public class Main extends JFrame {
         if (board[selectedRow][0] == player  // 3-in-the-row
                 && board[selectedRow][1] == player
                 && board[selectedRow][2] == player
+                && board[selectedRow][3] == player
+                && board[selectedRow][4] == player
                 || board[0][selectedCol] == player // 3-in-the-column
                 && board[1][selectedCol] == player
                 && board[2][selectedCol] == player
+                && board[3][selectedCol] == player
+                && board[4][selectedCol] == player
+
                 || selectedRow == selectedCol  // 3-in-the-diagonal
                 && board[0][0] == player
                 && board[1][1] == player
                 && board[2][2] == player
+                && board[3][3] == player
+                && board[4][4] == player
+
                 || selectedRow + selectedCol == 2 // 3-in-the-opposite-diagonal
-                && board[0][2] == player
-                && board[1][1] == player
-                && board[2][0] == player) {
+                && board[0][4] == player
+                && board[1][3] == player
+                && board[2][2] == player
+                && board[3][1] == player
+                && board[4][0] == player) {
             return (player == Seed.CROSS) ? State.CROSS_WON : State.NOUGHT_WON;
         } else {
             // Nobody win. Check for DRAW (all cells occupied) or PLAYING.
@@ -254,8 +264,8 @@ public class Main extends JFrame {
                     statusBar.setForeground(Color.BLACK);
                     statusBar.setText((currentPlayer == Seed.CROSS) ?
                             player1Name + "'s Turn"  :  player2Name + "'s Turn");
-                    statusBar.setText((currentPlayer == Seed.CROSS) ?
-                            player2Name + "'s Turn" : player1Name + "'s Turn");
+                    // statusBar.setText((currentPlayer == Seed.CROSS) ?
+                    //         player2Name + "'s Turn" : player1Name + "'s Turn");
                 } else if (currentState == State.DRAW) {
                     statusBar.setForeground(Color.RED);
                     statusBar.setText("It's a Draw! Click to play again");
