@@ -1,6 +1,17 @@
 package TicTacToe;
 
 import java.awt.*;
+
+/**
+ * ES234317-Algorithm and Data Structures
+ * Semester Ganjil, 2023/2024
+ * Group Capstone Project
+ * Group #1
+ * 1 - 5026221013 - Andika Cahya Sutisna
+ * 2 - 5026221129 - Muhammad Ahdaf Amali
+ * 3 - 5026221170 - Putu Panji Wiradharma
+ */
+
 /**
  * The cells class models the ROWS-by-COLS game cells.
  */
@@ -74,7 +85,7 @@ public class Board {
                 && cells[3][3].content == player
                 && cells[4][4].content == player
 
-                || selectedRow + selectedCol == 2 // 3-in-the-opposite-diagonal
+                || selectedRow + selectedCol == 4 // 3-in-the-opposite-diagonal
                 && cells[0][4].content == player
                 && cells[1][3].content == player
                 && cells[2][2].content == player
