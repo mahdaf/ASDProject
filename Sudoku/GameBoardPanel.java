@@ -66,9 +66,9 @@ public class GameBoardPanel extends JPanel{
      * Generate a new puzzle; and reset the gameboard of cells based on the puzzle.
      * You can call this method to start a new game.
      */
-    public void newGame() {
+    public void EasyGame() {
         // Generate a new puzzle
-        puzzle.newPuzzle(2);
+        puzzle.EasyPuzzle(2);
 
         // Initialize all the 9x9 cells, based on the puzzle.
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
@@ -78,6 +78,29 @@ public class GameBoardPanel extends JPanel{
         }
     }
 
+    public void MediumGame() {
+        // Generate a new puzzle
+        puzzle.MediumPuzzle(2);
+
+        // Initialize all the 9x9 cells, based on the puzzle.
+        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                cells[row][col].newGame(puzzle.numbers[row][col], puzzle.isGiven[row][col]);
+            }
+        }
+    }
+
+    public void HardGame() {
+        // Generate a new puzzle
+        puzzle.HardPuzzle(2);
+
+        // Initialize all the 9x9 cells, based on the puzzle.
+        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                cells[row][col].newGame(puzzle.numbers[row][col], puzzle.isGiven[row][col]);
+            }
+        }
+    }
     /**
      * Return true if the puzzle is solved
      * i.e., none of the cell have status of TO_GUESS or WRONG_GUESS
@@ -145,7 +168,7 @@ public class GameBoardPanel extends JPanel{
                     System.out.println("Dialog ditutup tanpa pemilihan.");
                     System.exit(0);
                 } else if (opsi[pilihan]==opsi[0]){
-                    newGame();
+                    EasyGame();
 
                 } else {
                    JOptionPane.showMessageDialog(null, "Thank you for playing");
@@ -153,5 +176,8 @@ public class GameBoardPanel extends JPanel{
                 }
             }
         }
+    }
+
+    public void newGame(Object opsi) {
     }
 }
