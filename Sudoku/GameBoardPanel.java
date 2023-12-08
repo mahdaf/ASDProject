@@ -3,7 +3,7 @@ package Sudoku;
  * ES234317-Algorithm and Data Structures
  * Semester Ganjil, 2023/2024
  * Group Capstone Project
- * Group #1
+ * Group #3
  * 1 - 5026221013 - Andika Cahya Sutisna
  * 2 - 5026221129 - Muhammad Ahdaf Amali
  * 3 - 5026221170 - Putu Panji Wiradharma
@@ -60,6 +60,14 @@ public class GameBoardPanel extends JPanel{
 
         super.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
         
+    }
+    public void SolveGame(){
+        puzzle.SolvePuzzle();
+        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                cells[row][col].newGame(puzzle.numbers[row][col], puzzle.isGiven[row][col]);
+            }
+        }
     }
 
     /**
@@ -178,6 +186,4 @@ public class GameBoardPanel extends JPanel{
         }
     }
 
-    public void newGame(Object opsi) {
-    }
 }

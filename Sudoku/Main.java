@@ -3,7 +3,7 @@ package Sudoku;
  * ES234317-Algorithm and Data Structures
  * Semester Ganjil, 2023/2024
  * Group Capstone Project
- * Group #1
+ * Group #3
  * 1 - 5026221013 - Andika Cahya Sutisna
  * 2 - 5026221129 - Muhammad Ahdaf Amali
  * 3 - 5026221170 - Putu Panji Wiradharma
@@ -55,7 +55,7 @@ public class Main extends JFrame {
             btnNewGame.addActionListener(e -> board.EasyGame()); // Add ActionListener to the button
             cp.add(btnNewGame, BorderLayout.SOUTH); // Add button to the south
 
-            btnSolve.addActionListener(e -> board.EasyGame());
+            btnSolve.addActionListener(e -> board.SolveGame());
             buttonPanel.setLayout(new FlowLayout());
             buttonPanel.add(btnNewGame);
             buttonPanel.add(btnSolve);
@@ -77,7 +77,7 @@ public class Main extends JFrame {
             btnNewGame.addActionListener(e -> board.MediumGame()); // Add ActionListener to the button
             cp.add(btnNewGame, BorderLayout.SOUTH); // Add button to the south
 
-            btnSolve.addActionListener(e -> board.MediumGame());
+            btnSolve.addActionListener(e -> board.SolveGame());
             buttonPanel.setLayout(new FlowLayout());
             buttonPanel.add(btnNewGame);
             buttonPanel.add(btnSolve);
@@ -99,7 +99,8 @@ public class Main extends JFrame {
             btnNewGame.addActionListener(e -> board.HardGame()); // Add ActionListener to the button
             cp.add(btnNewGame, BorderLayout.SOUTH); // Add button to the south
 
-            btnSolve.addActionListener(e -> board.HardGame());
+            btnSolve.addActionListener(e -> board.SolveGame());
+
             buttonPanel.setLayout(new FlowLayout());
             buttonPanel.add(btnNewGame);
             buttonPanel.add(btnSolve);
