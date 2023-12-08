@@ -24,15 +24,13 @@ public class Main extends JPanel {
     private String player1Name;
     private String player2Name;
 
-   // Define named constants for the drawing graphics
+// Define named constants for the drawing graphics
    public static final String TITLE = "Tic Tac Toe";
-   public static final Color COLOR_BG = Color.BLACK;
+   public static final Color COLOR_BG = new Color(20, 189, 172);
    public static final Color COLOR_BG_STATUS = new Color(216, 216, 216);
-   public static final Color COLOR_GRID = Color.LIGHT_GRAY; //grid
-   public static final Color COLOR_CROSS = new Color(225, 40, 96);  // Red #EF6950
-   public static final Color COLOR_NOUGHT = new Color(58, 176, 24); // Blue #409AE1
-   public static final Font FONT_STATUS = new Font("OCR A Extended", Font.PLAIN, 14);
-
+   public static final Color COLOR_CROSS = new Color(242, 235, 211);  // Red #EF6950
+   public static final Color COLOR_NOUGHT = new Color(84, 84, 84); // Blue #409AE1
+   public static final Font FONT_STATUS = new Font("Poppins", Font.PLAIN, 16);
 
    //nama player
    public String getPlayer1Name(){
@@ -134,10 +132,10 @@ public class Main extends JPanel {
          statusBar.setForeground(Color.RED);
          statusBar.setText("It's a Draw! Click to play again.");
       } else if (currentState == State.CROSS_WON) {
-         statusBar.setForeground(Color.RED);
+         statusBar.setForeground(new Color(8, 137,91));
          statusBar.setText( player1Name +" Won! Click to play again.");
       } else if (currentState == State.NOUGHT_WON) {
-         statusBar.setForeground(Color.RED);
+         statusBar.setForeground(new Color(8, 137,91));
          statusBar.setText( player2Name +" Won! Click to play again.");
       }
    }
@@ -148,6 +146,14 @@ public class Main extends JPanel {
       javax.swing.SwingUtilities.invokeLater(new Runnable() {
          public void run() {
             JFrame frame = new JFrame(TITLE);
+            // Menambahkan window listener untuk menangkap kejadian penutupan frame
+            frame.addWindowListener(new WindowAdapter() {
+               @Override
+               public void windowClosing(WindowEvent e) {
+                        JOptionPane.showMessageDialog(null, "Thank you for playing");
+                        System.exit(0);
+               }
+            });
             // Set the content-pane of the JFrame to an instance of main JPanel
             frame.setContentPane(new Main());
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
