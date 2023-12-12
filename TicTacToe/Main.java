@@ -23,6 +23,7 @@ public class Main extends JPanel {
 
     private String player1Name;
     private String player2Name;
+    private String boardSize;
 
 // Define named constants for the drawing graphics
    public static final String TITLE = "Tic Tac Toe";
@@ -40,11 +41,20 @@ public class Main extends JPanel {
    public String getPlayer2Name(){
     return player2Name;
    }
+
+   public String getBoardSize(){
+    return boardSize;
+   }
+
    // Define game objects
    private Board board;         // the game board
+   private BoardThree boardThree; 
    private State currentState;  // the current state of the game
    private Seed currentPlayer;  // the current player
+   private State currentStateThree;  // the current state of the game
+   private Seed currentPlayerThree;  // the current player
    private JLabel statusBar;    // for displaying status message
+   private JLabel statusBarThree;    // for displaying status message
 
    /** Constructor to setup the UI and game components */
    public Main() {
@@ -53,50 +63,117 @@ public class Main extends JPanel {
     // Meminta input nama pemain 2
     player2Name = JOptionPane.showInputDialog("Masukkan nama Player 2:");
 
-      // This JPanel fires MouseEvent
-      super.addMouseListener(new MouseAdapter() {
-         @Override
-         public void mouseClicked(MouseEvent e) {  // mouse-clicked handler
-            int mouseX = e.getX();
-            int mouseY = e.getY();
-            // Get the row and column clicked
-            int row = mouseY / Cell.SIZE;
-            int col = mouseX / Cell.SIZE;
+    Object[] opsi = {"3x3", "5x5"};
+        // Menampilkan dialog dengan opsi dan mendapatkan nilai kembaliannya
+        int boardSize = JOptionPane.showOptionDialog(
+                null, // Komponen induk (null untuk dialog tengah layar)
+                "Select Board Size", // Pesan dialog
+                "Size : ", // Judul dialog
+                JOptionPane.DEFAULT_OPTION, // Tipe ikon (DEFAULT_OPTION untuk ikon default)
+                JOptionPane.QUESTION_MESSAGE, // Tipe pesan (QUESTION_MESSAGE untuk pertanyaan)
+                null, // Icon kustom (null untuk ikon default)
+                opsi, // Daftar opsi
+                opsi[0]); // Opsi default yang terpilih
 
-            if (currentState == State.PLAYING) {
-               if (row >= 0 && row < Board.ROWS && col >= 0 && col < Board.COLS
-                     && board.cells[row][col].content == Seed.NO_SEED) {
-                  // Update cells[][] and return the new game state after the move
-                  currentState = board.stepGame(currentPlayer, row, col);
-                  // Switch player
-                  currentPlayer = (currentPlayer == Seed.CROSS) ? Seed.NOUGHT : Seed.CROSS;
+    if(boardSize == JOptionPane.CLOSED_OPTION) {
+      System.out.println("Dialog ditutup tanpa pemilihan.");
+      System.exit(0);
+      } else if (opsi[boardSize]==opsi[0]) {
+
+            super.addMouseListener(new MouseAdapter() {
+               @Override
+               
+               public void mouseClicked(MouseEvent e) {  // mouse-clicked handler
+                  int mouseX = e.getX();
+                  int mouseY = e.getY();
+                  // Get the row and column clicked
+                  int row = mouseY / Cell.SIZE;
+                  int col = mouseX / Cell.SIZE;
+
+                  if (currentStateThree == State.PLAYING) {
+                     if (row >= 0 && row < BoardThree.ROWS && col >= 0 && col < BoardThree.COLS
+                           && boardThree.cells[row][col].contentThree == Seed.NO_SEED) {
+                        // Update cells[][] and return the new game state after the move
+                        currentStateThree = boardThree.stepGameThree(currentPlayerThree, row, col);
+                        // Switch player
+                        currentPlayerThree = (currentPlayerThree == Seed.CROSS) ? Seed.NOUGHT : Seed.CROSS;
+                     }
+                     
+                  } else {        // game over
+                     newGameThree();  // restart the game
+                  }
+                  // Refresh the drawing canvas
+                  repaint();  // Callback paintComponent().
                }
-            } else {        // game over
-               newGame();  // restart the game
-            }
-            // Refresh the drawing canvas
-            repaint();  // Callback paintComponent().
-         }
-      });
-
-      // Setup the status bar (JLabel) to display status message
-      statusBar = new JLabel();
-      statusBar.setFont(FONT_STATUS);
-      statusBar.setBackground(COLOR_BG_STATUS);
-      statusBar.setOpaque(true);
-      statusBar.setPreferredSize(new Dimension(300, 30));
-      statusBar.setHorizontalAlignment(JLabel.LEFT);
-      statusBar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 12));
-
-      super.setLayout(new BorderLayout());
-      super.add(statusBar, BorderLayout.PAGE_END); // same as SOUTH
-      super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 30));
-            // account for statusBar in height
-      super.setBorder(BorderFactory.createLineBorder(COLOR_BG_STATUS, 2, false));
-
+            });
+             // Setup the status bar (JLabel) to display status message
+      
       // Set up Game
-      initGame();
-      newGame();
+    
+      } else if (opsi[boardSize]==opsi[1]){
+            super.addMouseListener(new MouseAdapter() {
+               @Override
+
+               public void mouseClicked(MouseEvent e) {  // mouse-clicked handler
+                  int mouseX = e.getX();
+                  int mouseY = e.getY();
+                  // Get the row and column clicked
+                  int row = mouseY / Cell.SIZE;
+                  int col = mouseX / Cell.SIZE;
+
+                  if (currentState == State.PLAYING) {
+                     if (row >= 0 && row < Board.ROWS && col >= 0 && col < Board.COLS
+                           && board.cells[row][col].content == Seed.NO_SEED) {
+                        // Update cells[][] and return the new game state after the move
+                        currentState = board.stepGame(currentPlayer, row, col);
+                        // Switch player
+                        currentPlayer = (currentPlayer == Seed.CROSS) ? Seed.NOUGHT : Seed.CROSS;
+                     }
+                  } else {        // game over
+                     newGame();  // restart the game
+                  }
+                  // Refresh the drawing canvas
+                  repaint();  // Callback paintComponent().
+               }  
+            });
+             // Setup the status bar (JLabel) to display status message
+      }
+
+      // This JPanel fires MouseEvent
+      
+      if(opsi[boardSize]==opsi[0]){
+         initGameThree();
+         newGameThree();
+
+         statusBarThree = new JLabel();
+         statusBarThree.setFont(FONT_STATUS);
+         statusBarThree.setBackground(COLOR_BG_STATUS);
+         statusBarThree.setOpaque(true);
+         statusBarThree.setPreferredSize(new Dimension(300, 30));
+         statusBarThree.setHorizontalAlignment(JLabel.LEFT);
+         statusBarThree.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 12));
+         super.setLayout(new BorderLayout());
+         super.add(statusBarThree, BorderLayout.PAGE_END); // same as SOUTH
+         super.setPreferredSize(new Dimension(BoardThree.CANVAS_WIDTH, BoardThree.CANVAS_HEIGHT + 30));
+               // account for statusBar in height
+         super.setBorder(BorderFactory.createLineBorder(COLOR_BG_STATUS, 2, false));
+      } else if (opsi[boardSize]==opsi[1]){
+         initGame();
+         newGame();
+
+         statusBar = new JLabel();
+         statusBar.setFont(FONT_STATUS);
+         statusBar.setBackground(COLOR_BG_STATUS);
+         statusBar.setOpaque(true);
+         statusBar.setPreferredSize(new Dimension(300, 30));
+         statusBar.setHorizontalAlignment(JLabel.LEFT);
+         statusBar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 12));
+         super.setLayout(new BorderLayout());
+         super.add(statusBar, BorderLayout.PAGE_END); // same as SOUTH
+         super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 30));
+               // account for statusBar in height
+         super.setBorder(BorderFactory.createLineBorder(COLOR_BG_STATUS, 2, false));
+      } 
    }
 
    /** Initialize the game (run once) */
@@ -115,33 +192,74 @@ public class Main extends JPanel {
       currentState = State.PLAYING;  // ready to play
    }
 
+   public void initGameThree() {
+      boardThree = new BoardThree();  // allocate the game-board
+   }
+
+   /** Reset the game-board contents and the current-state, ready for new game */
+   public void newGameThree() {
+      for (int row = 0; row < BoardThree.ROWS; ++row) {
+         for (int col = 0; col < BoardThree.COLS; ++col) {
+            boardThree.cells[row][col].contentThree = Seed.NO_SEED; // all cells empty
+         }
+      }
+      currentPlayerThree = Seed.CROSS;    // cross plays first
+      currentStateThree = State.PLAYING;  // ready to play
+   }
+
    /** Custom painting codes on this JPanel */
    @Override
    public void paintComponent(Graphics g) {  // Callback via repaint()
+
       super.paintComponent(g);
       setBackground(COLOR_BG); // set its background color
 
-      board.paint(g);  // ask the game board to paint itself
+
 
       // Print status-bar message
       if (currentState == State.PLAYING) {
+         board.paint(g);
         statusBar.setForeground(Color.BLACK);
         statusBar.setText((currentPlayer == Seed.CROSS) ?
                 player1Name + "'s Turn"  :  player2Name + "'s Turn");
       } else if (currentState == State.DRAW) {
+         board.paint(g);
          statusBar.setForeground(Color.RED);
          statusBar.setText("It's a Draw! Click to play again.");
       } else if (currentState == State.CROSS_WON) {
+         board.paint(g);
          statusBar.setForeground(new Color(8, 137,91));
          statusBar.setText( player1Name +" Won! Click to play again.");
       } else if (currentState == State.NOUGHT_WON) {
+         board.paint(g);
          statusBar.setForeground(new Color(8, 137,91));
          statusBar.setText( player2Name +" Won! Click to play again.");
+      }
+
+      if (currentStateThree == State.PLAYING) {
+         boardThree.paintThree(g);  // ask the game board to paint itself
+        statusBarThree.setForeground(Color.BLACK);
+        statusBarThree.setText((currentPlayerThree == Seed.CROSS) ?
+                player1Name + "'s Turn"  :  player2Name + "'s Turn");
+      } else if (currentStateThree == State.DRAW) {
+         boardThree.paintThree(g);  // ask the game board to paint itself
+         statusBarThree.setForeground(Color.RED);
+         statusBarThree.setText("It's a Draw! Click to play again.");
+      } else if (currentStateThree == State.CROSS_WON) {
+         boardThree.paintThree(g);  // ask the game board to paint itself
+         statusBarThree.setForeground(new Color(8, 137,91));
+         statusBarThree.setText( player1Name +" Won! Click to play again.");
+      } else if (currentStateThree == State.NOUGHT_WON) {
+         boardThree.paintThree(g);  // ask the game board to paint itself
+         statusBarThree.setForeground(new Color(8, 137,91));
+         statusBarThree.setText( player2Name +" Won! Click to play again.");
       }
    }
 
    /** The entry "main" method */
    public static void main(String[] args) {
+
+     
       // Run GUI construction codes in Event-Dispatching thread for thread safety
       javax.swing.SwingUtilities.invokeLater(new Runnable() {
          public void run() {
