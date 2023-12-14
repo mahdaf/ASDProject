@@ -12,7 +12,7 @@ public class SudokuConstants {
     public static final int GRID_SIZE = 9;
 
     // Tambahkan konstanta tingkat kesulitan
-    public static final int EASY_DIFFICULTY = 20;
+    public static final int EASY_DIFFICULTY = 10;
     public static final int MEDIUM_DIFFICULTY = 4;
     public static final int HARD_DIFFICULTY = 6;
 }

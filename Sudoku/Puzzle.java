@@ -19,6 +19,12 @@ public class Puzzle {
 
     // Generate a new puzzle with unique numbers in each row and column
     public void generateNewPuzzle(int difficulty) {
+        for(int i=0; i < SudokuConstants.GRID_SIZE; ++i) {
+            for(int j=0; j < SudokuConstants.GRID_SIZE; ++j) {
+                isGiven[i][j] = false;
+            }            
+        }
+
         List<Integer> availableNumbers = new ArrayList<>();
         for (int i = 1; i <= SudokuConstants.GRID_SIZE; ++i) {
             availableNumbers.add(i);
@@ -159,6 +165,7 @@ public class Puzzle {
         return true;
     }
 
+    // GK DIPAKE---
     // Helper method to set some cells as given randomly
     private void setGivenCellsRandomly(int difficulty) {
         Random random = new Random();
@@ -174,7 +181,7 @@ public class Puzzle {
 
     public void generateEasyPuzzle() {
         generateNewPuzzle(SudokuConstants.EASY_DIFFICULTY);
-        //setGivenCellsRandomly(SudokuConstants.EASY_DIFFICULTY);
+        // setGivenCellsRandomly(SudokuConstants.EASY_DIFFICULTY);
         // removeCellsForDifficulty(SudokuConstants.EASY_DIFFICULTY);
     }
 
@@ -192,6 +199,7 @@ public class Puzzle {
         removeCellsForDifficulty(SudokuConstants.HARD_DIFFICULTY);
     }
 
+    // GK KEPAKE---
     private void removeCellsForDifficulty(int difficulty) {
         int cellsToRemove = calculateCellsToRemove(difficulty);
         int maxAttempts = 100; // Set a maximum number of removal attempts
