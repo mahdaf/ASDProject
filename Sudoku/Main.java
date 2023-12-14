@@ -27,7 +27,10 @@ public class Main extends JFrame {
     public Main() {
         // Meminta input nama pemain
         playerName = JOptionPane.showInputDialog("Masukkan nama Player:");
+        System.out.println("Player Name: " + playerName);
+
         board.setPlayerName(playerName);
+
         Object[] opsi = {"Easy", "Medium", "Hard"};
 
         // Menampilkan dialog dengan opsi dan mendapatkan nilai kembaliannya
@@ -41,30 +44,32 @@ public class Main extends JFrame {
                 opsi, // Daftar opsi
                 opsi[0]); // Opsi default yang terpilih
 
+        System.out.println("Selected Difficulty: " + opsi[pilihan]);
         // Menggunakan nilai kembaliannya untuk menentukan tindakan selanjutnya
         if(pilihan == JOptionPane.CLOSED_OPTION) {
             System.out.println("Dialog ditutup tanpa pemilihan.");
             System.exit(0);
-        } else if (opsi[pilihan]==opsi[0]) {
+        } 
+        if (opsi[pilihan] == opsi[0]) {
             Container cp = getContentPane();
             cp.setLayout(new BorderLayout());
 
             cp.add(board, BorderLayout.CENTER);
 
-            // Add a button to the south to re-start the game via board.newGame()
-            btnNewGame.addActionListener(e -> board.EasyGame()); // Add ActionListener to the button
-            cp.add(btnNewGame, BorderLayout.SOUTH); // Add button to the south
+            JButton btnNewGameEasy = new JButton("New Game");
+            btnNewGameEasy.addActionListener(e -> board.EasyGame());
+            cp.add(btnNewGameEasy, BorderLayout.SOUTH);
+            cp.add(btnSolve, BorderLayout.SOUTH);
 
-            btnSolve.addActionListener(e -> board.SolveGame());
             buttonPanel.setLayout(new FlowLayout());
-            buttonPanel.add(btnNewGame);
+            buttonPanel.add(btnNewGameEasy);
             buttonPanel.add(btnSolve);
             cp.add(buttonPanel, BorderLayout.SOUTH);
-            // Initialize the game board to start the game
+
             board.EasyGame();
-            
-            pack();     // Pack the UI components, instead of using setSize()
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // to handle window-closing
+
+            pack();
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setTitle("Sudoku");
             setVisible(true);
         } else if (opsi[pilihan]==opsi[1]){
@@ -124,5 +129,13 @@ public class Main extends JFrame {
         SwingUtilities.invokeLater(() -> {
             new Main();
         });
+        Puzzle app = new Puzzle();
+        app.solve();
+        for(int r = 0 ; r < 9 ; r++){
+            for (int c = 0 ; c < 9 ; c++){
+                System.out.print(app.numbers[r][c] + " ");
+            }
+        System.out.println();
+    }
     }
 }

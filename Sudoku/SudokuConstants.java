@@ -9,14 +9,10 @@ package Sudoku;
  * 3 - 5026221170 - Putu Panji Wiradharma
  */
 public class SudokuConstants {
-    /**
-     * Size of the board
-     */
     public static final int GRID_SIZE = 9;
-    /**
-     * Size of sub-grid of the board
-     */
-    public static final int SUBGRID_SIZE = 3;
 
-
+    // Tambahkan konstanta tingkat kesulitan
+    public static final int EASY_DIFFICULTY = 20;
+    public static final int MEDIUM_DIFFICULTY = 4;
+    public static final int HARD_DIFFICULTY = 6;
 }

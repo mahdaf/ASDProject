@@ -62,7 +62,7 @@ public class GameBoardPanel extends JPanel{
         
     }
     public void SolveGame(){
-        puzzle.SolvePuzzle();
+        puzzle.solve();
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
             for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
                 cells[row][col].newGame(puzzle.numbers[row][col], puzzle.isGiven[row][col]);
@@ -75,20 +75,19 @@ public class GameBoardPanel extends JPanel{
      * You can call this method to start a new game.
      */
     public void EasyGame() {
-        // Generate a new puzzle
-        puzzle.EasyPuzzle(2);
+        puzzle.generateNewPuzzle(20);
 
         // Initialize all the 9x9 cells, based on the puzzle.
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
             for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+
                 cells[row][col].newGame(puzzle.numbers[row][col], puzzle.isGiven[row][col]);
             }
         }
     }
 
     public void MediumGame() {
-        // Generate a new puzzle
-        puzzle.MediumPuzzle(2);
+        puzzle.generateMediumPuzzle();
 
         // Initialize all the 9x9 cells, based on the puzzle.
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
@@ -99,8 +98,7 @@ public class GameBoardPanel extends JPanel{
     }
 
     public void HardGame() {
-        // Generate a new puzzle
-        puzzle.HardPuzzle(2);
+        puzzle.generateHardPuzzle();
 
         // Initialize all the 9x9 cells, based on the puzzle.
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {

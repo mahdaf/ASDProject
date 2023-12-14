@@ -1,15 +1,12 @@
 package Sudoku;
-/**
- * ES234317-Algorithm and Data Structures
- * Semester Ganjil, 2023/2024
- * Group Capstone Project
- * Group #3
- * 1 - 5026221013 - Andika Cahya Sutisna
- * 2 - 5026221129 - Muhammad Ahdaf Amali
- * 3 - 5026221170 - Putu Panji Wiradharma
- */
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.Stack;
+
 public class Puzzle {
-    // All variables have package access
     // The numbers on the puzzle
     int[][] numbers = new int[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
     // The clues - isGiven (no need to guess) or need to guess
@@ -20,169 +17,220 @@ public class Puzzle {
         super();
     }
 
-    // Generate a new puzzle given the number of cells to be guessed, which can be used
-    //  to control the difficulty level.
-    // This method shall set (or update) the arrays numbers and isGiven
-    public void SolvePuzzle(){
-        // I hardcode a puzzle here for illustration and testing.
-        int[][] hardcodedNumbers =
-                {{5, 3, 4, 6, 7, 8, 9, 1, 2},
-                        {6, 7, 2, 1, 9, 5, 3, 4, 8},
-                        {1, 9, 8, 3, 4, 2, 5, 6, 7},
-                        {8, 5, 9, 7, 6, 1, 4, 2, 3},
-                        {4, 2, 6, 8, 5, 3, 7, 9, 1},
-                        {7, 1, 3, 9, 2, 4, 8, 5, 6},
-                        {9, 6, 1, 5, 3, 7, 2, 8, 4},
-                        {2, 8, 7, 4, 1, 9, 6, 3, 5},
-                        {3, 4, 5, 2, 8, 6, 1, 7, 9}};
-
-        // Copy from hardcodedNumbers into the array "numbers"
+    // Generate a new puzzle with unique numbers in each row and column
+    public void generateNewPuzzle(int difficulty) {
+        List<Integer> availableNumbers = new ArrayList<>();
+        for (int i = 1; i <= SudokuConstants.GRID_SIZE; ++i) {
+            availableNumbers.add(i);
+        }
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+            Collections.shuffle(availableNumbers);
             for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-                numbers[row][col] = hardcodedNumbers[row][col];
+                numbers[row][col] = availableNumbers.get(col);
+            } 
+        }
+        
+        // Randomly set some cells as given based on difficulty
+        Random random = new Random();
+        int cellsToKeep = SudokuConstants.GRID_SIZE * SudokuConstants.GRID_SIZE - difficulty;
+
+        for (int i = 0; i < cellsToKeep; ++i) {
+            int row = random.nextInt(SudokuConstants.GRID_SIZE);
+            int col = random.nextInt(SudokuConstants.GRID_SIZE);
+            isGiven[row][col] = true;
+        }
+        for (int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                System.out.print(isGiven[i][j]+" ");
+            }
+            System.out.println();
+        }
+    
+    }
+
+    public boolean solve(){
+        Stack<Cell> stack = new Stack<>();
+        boolean[][] isLocked = setLocked(numbers);
+        int curRow = 0;
+        int curCol = 0;
+        int curValue =1;
+        int time = 0 ;
+        while(stack.size() < 81){
+            time++;
+            if(isLocked[curRow][curCol]){
+                Cell lockedCell = new Cell(curRow, curCol, numbers[curRow][curCol]);
+                stack.push(lockedCell);
+                curRow = curRow + (curCol+1)/9;
+                curCol = (curCol+1)%9;
+                continue;
+            }
+            for (;curValue <= 9 ; curValue++){
+                if (isValid(numbers, curRow, curCol, curValue)){
+                    break;
+                }
+            }
+            if(curValue <= 9){
+                Cell cell = new Cell(curRow, curCol, curValue);
+                numbers[curRow][curCol] = curValue;
+                stack.push(cell);
+                curRow = curRow + (curCol+1)/9;
+                curCol = (curCol+1)%9;
+                curValue = 1;
+            }else{
+                if (stack.size() > 0) {
+                    // Assign to a Cell variable the top of the stack (stack.pop())
+                    Cell cell = stack.pop();
+                    // while the Cell is locked
+                    while (isLocked[cell.row][cell.col]) {
+                        // if stack size is greater than 0
+                        if (stack.size() > 0) {
+                            // assign to the Cell variable the top of the stack (i.e. pop)
+                            cell = stack.pop();
+                        } else {
+                            // print out the number of steps (time)
+                            // return false (no solution found)
+                            System.out.println("Number of steps: " + time);
+                            return false;
+                        }
+                    }
+                    // assign to curRow the row value of the Cell
+                    curRow = cell.row;
+                    // assign to curCol the col value of the Cell
+                    curCol = cell.col;
+                    // assign to curValue the value of the Cell + 1
+                    curValue = cell.value + 1;
+                    // set the value of the numbers Cell at curRow, curCol to 0
+                    numbers[curRow][curCol] =  0;
+                } else {
+                    // print out the number of steps (time)
+                    // return false (no solution found)
+                    System.out.println("Number of steps: " + time);
+                    return false;
+                }
             }
         }
-        boolean[][] hardcodedIsGiven =
-                {{true, true, true, true, true, true, true, true, true},
-                        {true, true, true, true, true, true, true, true, true},
-                        {true, true, true, true, true, true, true, true, true},
-                        {true, true, true, true, true, true, true, true, true},
-                        {true, true, true, true, true, true, true, true, true},
-                        {true, true, true, true, true, true, true, true, true},
-                        {true, true, true, true, true, true, true, true, true},
-                        {true, true, true, true, true, true, true, true, true},
-                        {true, true, true, true, true, true, true, true, true}};
+        return true;
+    }
+    class Cell{
+        int row;
+        int col;
+        int value;
 
-        // Copy from hardcodedIsGiven into array "isGiven"
-        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
-            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-                isGiven[row][col] = hardcodedIsGiven[row][col];
+        public Cell(int row, int col, int value) {
+            this.row = row;
+            this.col = col;
+            this.value = value;
+        }
+    }
+    public boolean[][] setLocked(int[][] numbers){
+        boolean[][] isLocked = new boolean[9][9];
+        for(int r = 0 ; r < 9 ; r++){
+            for(int c = 0 ; c < 9 ; c++){
+                if(numbers[r][c]!=0){
+                    isLocked[r][c] = true;
+                }
             }
+        }
+
+        return isLocked;
+    }
+    public boolean isValid(int[][] numbers, int row, int col, int currValue){
+        // check row
+        for(int r = 0 ; r < 9 ; r++){
+            if(r != row && numbers[r][col] == currValue){
+                return false;
+            }
+        }
+        //check column
+        for(int c = 0 ; c < 9 ; c++){
+            if(c != col && numbers[row][c] == currValue){
+                return false;
+            }
+        }
+        int rowStartSquare = row - (row%3);
+        int colStartSquare = col - (col%3);
+        for(int r = 0 ; r < 3 ; r++){
+            for(int c = 0 ; c < 3 ; c++){
+                if(r != row && c != col && numbers[rowStartSquare+r][colStartSquare+c] == currValue){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    // Helper method to set some cells as given randomly
+    private void setGivenCellsRandomly(int difficulty) {
+        Random random = new Random();
+        int cellsToKeep = SudokuConstants.GRID_SIZE * SudokuConstants.GRID_SIZE - difficulty;
+
+        for (int i = 0; i < cellsToKeep; ++i) {
+            int row = random.nextInt(SudokuConstants.GRID_SIZE);
+            int col = random.nextInt(SudokuConstants.GRID_SIZE);
+
+            isGiven[row][col] = false;
         }
     }
 
-    public void EasyPuzzle(int cellsToGuess) {
-        // I hardcode a puzzle here for illustration and testing.
-        int[][] hardcodedNumbers =
-                {{5, 3, 4, 6, 7, 8, 9, 1, 2},
-                        {6, 7, 2, 1, 9, 5, 3, 4, 8},
-                        {1, 9, 8, 3, 4, 2, 5, 6, 7},
-                        {8, 5, 9, 7, 6, 1, 4, 2, 3},
-                        {4, 2, 6, 8, 5, 3, 7, 9, 1},
-                        {7, 1, 3, 9, 2, 4, 8, 5, 6},
-                        {9, 6, 1, 5, 3, 7, 2, 8, 4},
-                        {2, 8, 7, 4, 1, 9, 6, 3, 5},
-                        {3, 4, 5, 2, 8, 6, 1, 7, 9}};
-
-        // Copy from hardcodedNumbers into the array "numbers"
-        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
-            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-                numbers[row][col] = hardcodedNumbers[row][col];
-            }
-        }
-
-        // Need to use input parameter cellsToGuess!
-        // Hardcoded for testing, only 2 cells of "8" is NOT GIVEN
-        boolean[][] hardcodedIsGiven =
-                {{true, true, true, true, true, false, true, true, true},
-                        {true, true, true, true, true, true, true, true, false},
-                        {true, true, true, true, true, true, true, true, true},
-                        {true, false, true, true, true, true, true, true, true},
-                        {true, true, true, true, true, true, true, true, true},
-                        {true, true, true, true, false, true, true, true, true},
-                        {true, true, true, true, true, true, true, true, true},
-                        {true, true, true, true, true, true, true, true, true},
-                        {true, true, true, true, true, false, true, true, true}};
-
-        // Copy from hardcodedIsGiven into array "isGiven"
-        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
-            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-                isGiven[row][col] = hardcodedIsGiven[row][col];
-            }
-        }
+    public void generateEasyPuzzle() {
+        generateNewPuzzle(SudokuConstants.EASY_DIFFICULTY);
+        //setGivenCellsRandomly(SudokuConstants.EASY_DIFFICULTY);
+        // removeCellsForDifficulty(SudokuConstants.EASY_DIFFICULTY);
     }
 
-    public void MediumPuzzle(int cellsToGuess) {
-        // I hardcode a puzzle here for illustration and testing.
-        int[][] hardcodedNumbers =
-                {{5, 3, 4, 6, 7, 8, 9, 1, 2},
-                        {6, 7, 2, 1, 9, 5, 3, 4, 8},
-                        {1, 9, 8, 3, 4, 2, 5, 6, 7},
-                        {8, 5, 9, 7, 6, 1, 4, 2, 3},
-                        {4, 2, 6, 8, 5, 3, 7, 9, 1},
-                        {7, 1, 3, 9, 2, 4, 8, 5, 6},
-                        {9, 6, 1, 5, 3, 7, 2, 8, 4},
-                        {2, 8, 7, 4, 1, 9, 6, 3, 5},
-                        {3, 4, 5, 2, 8, 6, 1, 7, 9}};
-
-        // Copy from hardcodedNumbers into the array "numbers"
-        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
-            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-                numbers[row][col] = hardcodedNumbers[row][col];
-            }
-        }
-
-        // Need to use input parameter cellsToGuess!
-        // Hardcoded for testing, only 2 cells of "8" is NOT GIVEN
-        boolean[][] hardcodedIsGiven =
-                {{true, true, true, true, true, false, false, true, true},
-                        {true, true, true, true, true, true, true, true, false},
-                        {true, true, true, true, true, true, true, true, false},
-                        {true, false, true, true, true, false, true, true, true},
-                        {false, true, true, true, true, true, true, true, true},
-                        {true, true, true, true, false, true, true, true, true},
-                        {true, true, true, true, true, true, true, true, true},
-                        {true, true, true, true, true, true, true, true, true},
-                        {true, true, true, true, true, false, true, true, true}};
-
-        // Copy from hardcodedIsGiven into array "isGiven"
-        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
-            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-                isGiven[row][col] = hardcodedIsGiven[row][col];
-            }
-        }
+    // Generate a new medium puzzle
+    public void generateMediumPuzzle() {
+        generateNewPuzzle(SudokuConstants.MEDIUM_DIFFICULTY);
+        setGivenCellsRandomly(SudokuConstants.MEDIUM_DIFFICULTY);
+        removeCellsForDifficulty(SudokuConstants.MEDIUM_DIFFICULTY);
     }
 
-    public void HardPuzzle(int cellsToGuess) {
-        // I hardcode a puzzle here for illustration and testing.
-        int[][] hardcodedNumbers =
-                {{5, 3, 4, 6, 7, 8, 9, 1, 2},
-                        {6, 7, 2, 1, 9, 5, 3, 4, 8},
-                        {1, 9, 8, 3, 4, 2, 5, 6, 7},
-                        {8, 5, 9, 7, 6, 1, 4, 2, 3},
-                        {4, 2, 6, 8, 5, 3, 7, 9, 1},
-                        {7, 1, 3, 9, 2, 4, 8, 5, 6},
-                        {9, 6, 1, 5, 3, 7, 2, 8, 4},
-                        {2, 8, 7, 4, 1, 9, 6, 3, 5},
-                        {3, 4, 5, 2, 8, 6, 1, 7, 9}};
-
-        // Copy from hardcodedNumbers into the array "numbers"
-        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
-            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-                numbers[row][col] = hardcodedNumbers[row][col];
-            }
-        }
-
-        // Need to use input parameter cellsToGuess!
-        // Hardcoded for testing, only 2 cells of "8" is NOT GIVEN
-        boolean[][] hardcodedIsGiven =
-                {{true, true, true, true, true, false, true, true, true},
-                        {true, true, true, true, true, true, true, true, false},
-                        {true, true, true, true, true, true, true, true, true},
-                        {false, false, true, true, true, true, true, true, true},
-                        {false, true, true, true, true, true, true, true, true},
-                        {false, true, true, true, false, true, true, true, true},
-                        {false, true, true, true, true, true, true, true, true},
-                        {true, true, true, true, true, true, true, true, true},
-                        {true, true, true, true, true, false, true, true, true}};
-
-        // Copy from hardcodedIsGiven into array "isGiven"
-        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
-            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-                isGiven[row][col] = hardcodedIsGiven[row][col];
-            }
-        }
+    // Generate a new hard puzzle
+    public void generateHardPuzzle() {
+        generateNewPuzzle(SudokuConstants.HARD_DIFFICULTY);
+        setGivenCellsRandomly(SudokuConstants.HARD_DIFFICULTY);
+        removeCellsForDifficulty(SudokuConstants.HARD_DIFFICULTY);
     }
 
-    //(For advanced students) use singleton design pattern for this class
+    private void removeCellsForDifficulty(int difficulty) {
+        int cellsToRemove = calculateCellsToRemove(difficulty);
+        int maxAttempts = 100; // Set a maximum number of removal attempts
+    
+        Random random = new Random();
+        int removedCells = 0;
+    
+        for (int attempt = 0; attempt < maxAttempts && removedCells < cellsToRemove; ++attempt) {
+            int row = random.nextInt(SudokuConstants.GRID_SIZE);
+            int col = random.nextInt(SudokuConstants.GRID_SIZE);
+            // Skip already removed cells or given cells
+            if (numbers[row][col] != 0 && !isGiven[row][col]) {
+                System.out.println("TAI");
+
+            // Remove the cell
+                removedCells++;
+            }
+        }
+    }    
+
+    
+    private int calculateCellsToRemove(int difficulty) {
+        int totalCells = SudokuConstants.GRID_SIZE * SudokuConstants.GRID_SIZE;
+        int cellsToRemove = 0;
+
+        switch (difficulty) {
+            case SudokuConstants.EASY_DIFFICULTY:
+                cellsToRemove = totalCells / 2;
+                System.out.print("tes");
+                break;
+            case SudokuConstants.MEDIUM_DIFFICULTY:
+                cellsToRemove = totalCells * 2 / 3;
+                break;
+            case SudokuConstants.HARD_DIFFICULTY:
+                cellsToRemove = totalCells * 4 / 5;
+                break;
+        }
+
+        return cellsToRemove;
+    }
 }
+

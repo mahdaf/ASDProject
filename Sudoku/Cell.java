@@ -39,6 +39,8 @@ public class Cell extends JTextField {
     /** The status of this cell defined in enum CellStatus */
     CellStatus status;
 
+
+
     /** Constructor */
     public Cell(int row, int col) {
         super();   // JTextField
@@ -50,10 +52,18 @@ public class Cell extends JTextField {
     }
 
     /** Reset this cell for a new game, given the puzzle number and isGiven */
-    public void newGame(int number, boolean isGiven) {
-        this.number = number;
-        status = isGiven ? CellStatus.GIVEN : CellStatus.TO_GUESS;
-        paint();    // paint itself
+    public void newGame(int num, boolean isGiven) {
+        setText(num == 0 ? "" : String.valueOf(num));
+        setEditable(num == 0);
+         // Set the isGiven attribute
+        if(isGiven){
+            status = CellStatus.GIVEN;
+        } else{
+            status = CellStatus.TO_GUESS;
+        }
+        this.number= num;
+        // status = CellStatus.TO_GUESS; // Reset the cell status
+        paint(); // Repaint the cell
     }
 
     /** This Cell (JTextField) paints itself based on its status */
