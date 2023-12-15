@@ -33,7 +33,7 @@ public class Main extends JPanel {
    public static final Color COLOR_NOUGHT = new Color(84, 84, 84); // Blue #409AE1
    public static final Font FONT_STATUS = new Font("Poppins", Font.PLAIN, 16);
 
-   //nama player
+   //Player name
    public String getPlayer1Name(){
     return player1Name;
    }
@@ -64,16 +64,16 @@ public class Main extends JPanel {
     player2Name = JOptionPane.showInputDialog("Masukkan nama Player 2:");
 
     Object[] opsi = {"3x3", "5x5"};
-        // Menampilkan dialog dengan opsi dan mendapatkan nilai kembaliannya
+        // Display an option dialog that have the return value from Object [] opsi
         int boardSize = JOptionPane.showOptionDialog(
-                null, // Komponen induk (null untuk dialog tengah layar)
-                "Select Board Size", // Pesan dialog
-                "Size : ", // Judul dialog
-                JOptionPane.DEFAULT_OPTION, // Tipe ikon (DEFAULT_OPTION untuk ikon default)
-                JOptionPane.QUESTION_MESSAGE, // Tipe pesan (QUESTION_MESSAGE untuk pertanyaan)
-                null, // Icon kustom (null untuk ikon default)
-                opsi, // Daftar opsi
-                opsi[0]); // Opsi default yang terpilih
+                null, // Parent component (null for middle of screen dialog)
+                "Select Board Size", // Dialog message
+                "Size : ", // Dialog title
+                JOptionPane.DEFAULT_OPTION, // Icon type (DEFAULT_OPTION for default icon)
+                JOptionPane.QUESTION_MESSAGE, // Message type (QUESTION_MESSAGE for question)
+                null, // Custom icon (null for default icon)
+                opsi, // Option list
+                opsi[0]); // Default option chosen
 
     if(boardSize == JOptionPane.CLOSED_OPTION) {
       System.out.println("Dialog ditutup tanpa pemilihan.");
@@ -264,7 +264,7 @@ public class Main extends JPanel {
       javax.swing.SwingUtilities.invokeLater(new Runnable() {
          public void run() {
             JFrame frame = new JFrame(TITLE);
-            // Menambahkan window listener untuk menangkap kejadian penutupan frame
+            // Add a window listener to capture frame close events
             frame.addWindowListener(new WindowAdapter() {
                @Override
                public void windowClosing(WindowEvent e) {

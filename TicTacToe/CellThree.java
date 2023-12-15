@@ -55,12 +55,8 @@ public class CellThree {
       int y1 = row * SIZE + PADDING;
       if (contentThree == Seed.CROSS) {
          g2d.setColor(Main.COLOR_CROSS);  // draw a 2-line cross
-        g2d.setColor(Main.COLOR_CROSS);
-        // int x2 = (col + 1) * SIZE - PADDING;
-        // int y2 = (row + 1) * SIZE - PADDING;
-        //  g2d.drawLine(x1, y1, x2, y2);
-        //  g2d.drawLine(x2, y1, x1, y2);
-        g2d.fillRect(x1, y1, SEED_SIZE, SEED_SIZE);
+         g2d.setColor(Main.COLOR_CROSS);
+         g2d.fillRect(x1, y1, SEED_SIZE, SEED_SIZE);
       } else if (contentThree == Seed.NOUGHT) {  // draw a circle
          g2d.setColor(Main.COLOR_NOUGHT);
          g2d.drawRect(x1, y1, SEED_SIZE, SEED_SIZE);

@@ -230,10 +230,6 @@ public class MainNotOOP extends JFrame {
                     int y1 = row * CELL_SIZE + CELL_PADDING;
                     if (board[row][col] == Seed.CROSS) {  // draw a 2-line cross
                         g2d.setColor(COLOR_CROSS);
-                        int x2 = (col + 1) * CELL_SIZE - CELL_PADDING;
-                        int y2 = (row + 1) * CELL_SIZE - CELL_PADDING;
-//                        g2d.drawLine(x1, y1, x2, y2);
-//                        g2d.drawLine(x2, y1, x1, y2);
                         g2d.fillRect(x1, y1, SYMBOL_SIZE, SYMBOL_SIZE);
                         g2d.fillRect(x1, y1, SYMBOL_SIZE, SYMBOL_SIZE);
 
@@ -244,22 +240,7 @@ public class MainNotOOP extends JFrame {
                 }
             }
 
-//            // Print status message
-//            if (currentState == State.PLAYING) {
-//                statusBar.setForeground(Color.BLACK);
-//                statusBar.setText((currentPlayer == Seed.CROSS) ? "X's Turn" : "O's Turn");
-//            } else if (currentState == State.DRAW) {
-//                statusBar.setForeground(Color.RED);
-//                statusBar.setText("It's a Draw! Click to play again");
-//            } else if (currentState == State.CROSS_WON) {
-//                statusBar.setForeground(Color.RED);
-//                statusBar.setText("'X' Won! Click to play again");
-//            } else if (currentState == State.NOUGHT_WON) {
-//                statusBar.setForeground(Color.RED);
-//                statusBar.setText("'O' Won! Click to play again");
-//            }
-
-
+            // Print status message
                 if (currentState == State.PLAYING) {
                     statusBar.setForeground(Color.BLACK);
                     statusBar.setText((currentPlayer == Seed.CROSS) ?
