@@ -13,6 +13,7 @@ package Sudoku;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.border.EmptyBorder;
 
 public class Main extends JFrame {
     private static final long serialVersionUID = 1L;  // to prevent serial warning
@@ -22,12 +23,16 @@ public class Main extends JFrame {
     JButton btnNewGame = new JButton("New Game");
     JPanel buttonPanel = new JPanel();
     JButton btnSolve = new JButton("Solve");
-    
+    // Menu about developer
+    private JMenuItem menuItem;
+    private JDialog aboutDeveloper;
+    private JTextArea textArea;
+
     public String getPlayerName() {
             return playerName;
         }
     // Constructor
-    public Main() {
+    public Main() throws Exception{
         // Input player name
         playerName = JOptionPane.showInputDialog("Masukkan nama Player:");
         System.out.println("Player Name: " + playerName);
@@ -154,6 +159,48 @@ public class Main extends JFrame {
             setTitle("Sudoku");
             setVisible(true);
         }
+
+        // Play sound when play game
+        Sound music  = new Sound("words.wav");
+        music.play();
+
+        // Initialize the about menu
+        menuItem = new JMenuItem("About Developer");
+        aboutDeveloper = new JDialog(this, "About Developer", true);
+        Icon developerImage = new ImageIcon("foto-fp.jpg");
+        JLabel labelImage = new JLabel(developerImage); 
+
+        textArea = new JTextArea();
+        textArea.setEditable(false);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        JLabel labelAbout = new JLabel("Capstone Project - Group #3 (2.0 Version)");
+        String aboutText = "This Sudoku and TicTacToe game is part of the final project assignment for the Data Structure and Algorithms course. Sudoku is created by applying the DFS algorithm and the Stack data structure.\n\n"+
+                "The following is our project team:\n" +
+                "1. Andika Cahya Sutisna (5026221013)\n" +
+                "2. Muhammad Ahdaf Amali (5026221129)\n" +
+                "3. Putu Panji Wiradharma (5026221170)\n";
+
+        textArea.setText(aboutText);
+        textArea.setBackground(aboutDeveloper.getBackground());
+        textArea.setBorder(new EmptyBorder(10, 10, 10, 10));
+        aboutDeveloper.setLayout(new BorderLayout());
+        aboutDeveloper.add(labelImage, BorderLayout.NORTH);
+        aboutDeveloper.add(labelAbout, BorderLayout.CENTER);
+        aboutDeveloper.add(textArea, BorderLayout.CENTER);
+        aboutDeveloper.setSize(500, 300);
+        aboutDeveloper.setLocationRelativeTo(null);
+        aboutDeveloper.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        menuItem.addActionListener(e -> {
+            aboutDeveloper.setVisible(true);
+        });
+        
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Menu");
+        menu.add(menuItem);
+        menuBar.add(menu);
+        setJMenuBar(menuBar);
     }
 
     /** The entry main() entry method */
@@ -161,7 +208,12 @@ public class Main extends JFrame {
         // [TODO 1] Check "Swing program template" on how to run
         // the constructor of "Main"
         SwingUtilities.invokeLater(() -> {
-            new Main();
+            try {
+                new Main();
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         });
     }
 }

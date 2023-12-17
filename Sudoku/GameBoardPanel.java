@@ -151,10 +151,20 @@ public class GameBoardPanel extends JPanel{
             // Get a reference of the JTextField that triggers this action event
             Cell sourceCell = (Cell)e.getSource();
 
-            // Retrieve the int entered
-            int numberIn = Integer.parseInt(sourceCell.getText());
-            // For debugging
-            System.out.println("You entered " + numberIn);
+            int numberIn=0;
+            try {
+                // Retrieve the int entered
+                numberIn = Integer.parseInt(sourceCell.getText());
+                // For debugging
+                System.out.println("You entered " + numberIn);
+                if(numberIn==0){
+                    JOptionPane.showMessageDialog(null, "Masukan Hanya Angka 1-9");
+                    System.out.println("Input tidak valid. Masukkan angka yang benar.");
+                }
+            } catch (NumberFormatException n) {
+                JOptionPane.showMessageDialog(null, "Masukan Hanya Angka 1-9");
+                System.out.println("Input tidak valid. Masukkan angka yang benar.");
+            }
 
             /*
              * [TODO 5] (later - after TODO 3 and 4)
