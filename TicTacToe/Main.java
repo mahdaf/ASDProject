@@ -3,7 +3,6 @@ package TicTacToe;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 
 /**
  * ES234317-Algorithm and Data Structures
@@ -87,7 +86,7 @@ public class Main extends JPanel {
                }
             
               if (opsi[boardSizeIndex]==opsi[0]) {
-               super.addMouseListener(new MouseAdapter() {
+               this.addMouseListener(new MouseAdapter() {
                
                @Override
                
@@ -119,7 +118,7 @@ public class Main extends JPanel {
       // Set up Game
     
       } else if (opsi[boardSizeIndex]==opsi[1]){
-            super.addMouseListener(new MouseAdapter() {
+            this.addMouseListener(new MouseAdapter() {
                @Override
 
                public void mouseClicked(MouseEvent e) {  // mouse-clicked handler
@@ -283,7 +282,7 @@ public class Main extends JPanel {
       // Run GUI construction codes in Event-Dispatching thread for thread safety
       javax.swing.SwingUtilities.invokeLater(new Runnable() {
          public void run() {
-            JFrame frame = new JFrame(TITLE);
+            JFrame frame = new JFrame("TicTacToe");
             // Add a window listener to capture frame close events
             frame.addWindowListener(new WindowAdapter() {
                @Override
@@ -294,8 +293,7 @@ public class Main extends JPanel {
             });
             // Set the content-pane of the JFrame to an instance of main JPanel
             frame.setContentPane(new Main());
-            // Menu about developer
-
+            // Menu reset
             JMenuBar menuBar = new JMenuBar();
             JMenu menu = new JMenu("Menu");
 

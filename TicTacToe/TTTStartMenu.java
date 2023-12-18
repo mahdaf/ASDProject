@@ -1,4 +1,4 @@
-package Sudoku;
+package TicTacToe;
 
 /**
  * ES234317-Algorithm and Data Structures
@@ -18,12 +18,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 
-
-public class SudokuStartMenu extends JFrame{
+public class TTTStartMenu extends JFrame{
 
     public static void main(String[] args) throws Exception {
         
-        JFrame frm = new JFrame("Sudoku Game");
+        JFrame frm = new JFrame("Tic Tac Toe Game");
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         frm.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -37,8 +36,7 @@ public class SudokuStartMenu extends JFrame{
         int btnHeight = 50;
         int btnWidth = 300;
 
-
-        BufferedImage bgImage = ImageIO.read(new File("Sudoku/bg-sudoku.png"));
+        BufferedImage bgImage = ImageIO.read(new File("TicTacToe/bg-tictactoe.png"));
         Image scaledBgImage = bgImage.getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH);
         ImageIcon backgroundImage = new ImageIcon(scaledBgImage);
         JLabel background = new JLabel(backgroundImage);
@@ -55,7 +53,7 @@ public class SudokuStartMenu extends JFrame{
         menu.setSize(1000, 50);
         int menuHeight = 50;
         int menuWidth = 300;
-        menu.setPreferredSize(new Dimension(menuWidth, menuHeight));
+        menu.setPreferredSize(new Dimension(menuWidth, menuHeight)); 
 
         menuItem = new JMenuItem("                              About Developer");
         menuItem.setPreferredSize(menu.getPreferredSize());
@@ -102,15 +100,44 @@ public class SudokuStartMenu extends JFrame{
         btnStart.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                SwingUtilities.invokeLater(() -> {
-                    try {
-                        new Main();
-                    } catch (Exception e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
-                });
 
+                JFrame frame = new JFrame("Tic Tac Toe");
+                 // Add a window listener to capture frame close events
+            frame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                         JOptionPane.showMessageDialog(null, "Thank you for playing");
+                         System.exit(0);
+                }
+             });
+            
+             // Menu reset
+             JMenuBar menuBar = new JMenuBar();
+             JMenu menu = new JMenu("Menu");
+ 
+             JMenuItem resetMenuItem = new JMenuItem("Reset Game");
+             resetMenuItem.addActionListener(a -> {
+                if (frame.getContentPane() instanceof Main) {
+                   Main mainPanel = (Main) frame.getContentPane();
+                   mainPanel.repaint();
+                   if (mainPanel.getBoardSize().equals("3x3")) {
+                         mainPanel.newGameThree();
+                   } else if (mainPanel.getBoardSize().equals("5x5")) {
+                         mainPanel.newGame();
+                   }
+                }
+             });
+             
+             
+             menu.add(resetMenuItem);
+             menuBar.add(menu);
+             frame.setJMenuBar(menuBar);
+             
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setContentPane(new Main());
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
             }
             
         });

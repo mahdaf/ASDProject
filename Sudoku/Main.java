@@ -13,7 +13,6 @@ package Sudoku;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.border.EmptyBorder;
 
 public class Main extends JFrame {
     private static final long serialVersionUID = 1L;  // to prevent serial warning
