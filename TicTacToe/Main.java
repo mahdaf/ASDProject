@@ -56,33 +56,39 @@ public class Main extends JPanel {
    private Seed currentPlayerThree;  // the current player
    private JLabel statusBar;    // for displaying status message
    private JLabel statusBarThree;    // for displaying status message
-   
 
    /** Constructor to setup the UI and game components */
    public Main() {
+   statusBar = new JLabel();
+   statusBarThree = new JLabel();
+
     // Meminta input nama pemain 1
     player1Name = JOptionPane.showInputDialog("Masukkan nama Player 1:");
     // Meminta input nama pemain 2
     player2Name = JOptionPane.showInputDialog("Masukkan nama Player 2:");
 
-    Object[] opsi = {"3x3", "5x5"};
-        // Display an option dialog that have the return value from Object [] opsi
-        int boardSize = JOptionPane.showOptionDialog(
-                null, // Parent component (null for middle of screen dialog)
-                "Select Board Size", // Dialog message
-                "Size : ", // Dialog title
-                JOptionPane.DEFAULT_OPTION, // Icon type (DEFAULT_OPTION for default icon)
-                JOptionPane.QUESTION_MESSAGE, // Message type (QUESTION_MESSAGE for question)
-                null, // Custom icon (null for default icon)
-                opsi, // Option list
-                opsi[0]); // Default option chosen
+               Object[] opsi = {"3x3", "5x5"};
+               // Display an option dialog that have the return value from Object [] opsi
+               int boardSizeIndex = JOptionPane.showOptionDialog(
+               null, // Parent component (null for middle of screen dialog)
+               "Select Board Size", // Dialog message
+               "Size : ", // Dialog title
+               JOptionPane.DEFAULT_OPTION, // Icon type (DEFAULT_OPTION for default icon)
+               JOptionPane.QUESTION_MESSAGE, // Message type (QUESTION_MESSAGE for question)
+               null, // Custom icon (null for default icon)
+               opsi, // Option list
+               opsi[0]); // Default option chosen
 
-    if(boardSize == JOptionPane.CLOSED_OPTION) {
-      System.out.println("Dialog ditutup tanpa pemilihan.");
-      System.exit(0);
-      } else if (opsi[boardSize]==opsi[0]) {
-
-            super.addMouseListener(new MouseAdapter() {
+               if (boardSizeIndex != JOptionPane.CLOSED_OPTION) {
+                  boardSize = (String) opsi[boardSizeIndex]; // Set boardSize based on user selection
+               } else {
+                  System.out.println("Dialog ditutup tanpa pemilihan");
+                  System.exit(0);
+               }
+            
+              if (opsi[boardSizeIndex]==opsi[0]) {
+               super.addMouseListener(new MouseAdapter() {
+               
                @Override
                
                public void mouseClicked(MouseEvent e) {  // mouse-clicked handler
@@ -112,7 +118,7 @@ public class Main extends JPanel {
       
       // Set up Game
     
-      } else if (opsi[boardSize]==opsi[1]){
+      } else if (opsi[boardSizeIndex]==opsi[1]){
             super.addMouseListener(new MouseAdapter() {
                @Override
 
@@ -143,7 +149,7 @@ public class Main extends JPanel {
 
       // This JPanel fires MouseEvent
       
-      if(opsi[boardSize]==opsi[0]){
+      if(opsi[boardSizeIndex]==opsi[0]){
          initGameThree();
          newGameThree();
 
@@ -159,7 +165,7 @@ public class Main extends JPanel {
          super.setPreferredSize(new Dimension(BoardThree.CANVAS_WIDTH, BoardThree.CANVAS_HEIGHT + 30));
                // account for statusBar in height
          super.setBorder(BorderFactory.createLineBorder(COLOR_BG_STATUS, 2, false));
-      } else if (opsi[boardSize]==opsi[1]){
+      } else if (opsi[boardSizeIndex]==opsi[1]){
          initGame();
          newGame();
 
@@ -177,7 +183,7 @@ public class Main extends JPanel {
          super.setBorder(BorderFactory.createLineBorder(COLOR_BG_STATUS, 2, false));
       } 
    }
-
+  
    /** Initialize the game (run once) */
    public void initGame() {
       board = new Board();  // allocate the game-board
@@ -185,13 +191,20 @@ public class Main extends JPanel {
 
    /** Reset the game-board contents and the current-state, ready for new game */
    public void newGame() {
-      for (int row = 0; row < Board.ROWS; ++row) {
-         for (int col = 0; col < Board.COLS; ++col) {
-            board.cells[row][col].content = Seed.NO_SEED; // all cells empty
+      // Ensure the board is initialized before resetting
+      if (board != null) {
+         for (int row = 0; row < Board.ROWS; ++row) {
+            for (int col = 0; col < Board.COLS; ++col) {
+               board.cells[row][col].content = Seed.NO_SEED; // Reset all cells
+            }
          }
+         currentPlayer = Seed.CROSS;    // Set the starting player
+         currentState = State.PLAYING;  // Set the game state to playing
+      } else {
+            // If the board is null, initialize it
+         initGame();
+         newGame(); // Call newGame() again to ensure proper resetting
       }
-      currentPlayer = Seed.CROSS;    // cross plays first
-      currentState = State.PLAYING;  // ready to play
    }
 
    public void initGameThree() {
@@ -200,13 +213,20 @@ public class Main extends JPanel {
 
    /** Reset the game-board contents and the current-state, ready for new game */
    public void newGameThree() {
-      for (int row = 0; row < BoardThree.ROWS; ++row) {
-         for (int col = 0; col < BoardThree.COLS; ++col) {
-            boardThree.cells[row][col].contentThree = Seed.NO_SEED; // all cells empty
+      // Ensure the board is initialized before resetting
+      if (boardThree != null) {
+         for (int row = 0; row < BoardThree.ROWS; ++row) {
+            for (int col = 0; col < BoardThree.COLS; ++col) {
+               boardThree.cells[row][col].contentThree = Seed.NO_SEED; // Reset all cells
+            }
          }
+         currentPlayerThree = Seed.CROSS;    // Set the starting player
+         currentStateThree = State.PLAYING;  // Set the game state to playing
+      } else {
+            // If the board is null, initialize it
+         initGameThree();
+         newGameThree(); // Call newGame() again to ensure proper resetting
       }
-      currentPlayerThree = Seed.CROSS;    // cross plays first
-      currentStateThree = State.PLAYING;  // ready to play
    }
 
    /** Custom painting codes on this JPanel */
@@ -215,8 +235,6 @@ public class Main extends JPanel {
 
       super.paintComponent(g);
       setBackground(COLOR_BG); // set its background color
-
-
 
       // Print status-bar message
       if (currentState == State.PLAYING) {
@@ -276,6 +294,33 @@ public class Main extends JPanel {
             });
             // Set the content-pane of the JFrame to an instance of main JPanel
             frame.setContentPane(new Main());
+            // Menu about developer
+
+            JMenuBar menuBar = new JMenuBar();
+            JMenu menu = new JMenu("Menu");
+
+            JMenuItem resetMenuItem = new JMenuItem("Reset Game");
+            resetMenuItem.addActionListener(e -> {
+               if (frame.getContentPane() instanceof Main) {
+                  Main mainPanel = (Main) frame.getContentPane();
+                  mainPanel.repaint();
+                  if (mainPanel.getBoardSize().equals("3x3")) {
+                        mainPanel.newGameThree();
+                  } else if (mainPanel.getBoardSize().equals("5x5")) {
+                        mainPanel.newGame();
+                  }
+               }
+            });
+            
+            
+            menu.add(resetMenuItem);
+            menuBar.add(menu);
+            frame.setJMenuBar(menuBar);
+            
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.pack();
+            frame.setLocationRelativeTo(null); // center the application window
+            frame.setVisible(true);            // show it
             
             }
 
