@@ -23,10 +23,12 @@ public class Main extends JFrame {
     JButton btnNewGame = new JButton("New Game");
     JPanel buttonPanel = new JPanel();
     JButton btnSolve = new JButton("Solve");
+    JMenuBar difficulty;
+    JMenu diffmenu;
+    JMenuItem easy, medium, hard;
+    
     // Menu about developer
-    private JMenuItem menuItem;
-    private JDialog aboutDeveloper;
-    private JTextArea textArea;
+    
 
     public String getPlayerName() {
             return playerName;
@@ -71,6 +73,24 @@ public class Main extends JFrame {
             JButton btnSolveGame = new JButton("Solve");
             btnSolveGame.addActionListener(e -> board.SolveGame());
             cp.add(btnSolve, BorderLayout.SOUTH);
+            difficulty = new JMenuBar();
+
+            // create a menu
+            diffmenu = new JMenu("  Select Difficulty Level  ");
+
+            // create menuitems
+            easy = new JMenuItem("Easy");
+            medium = new JMenuItem("Medium");
+            hard = new JMenuItem("Hard");
+
+            // add menu items to menu
+            diffmenu.add(easy);
+            diffmenu.add(medium);
+            diffmenu.add(hard);
+
+            // add menu to menu bar
+            difficulty.add(diffmenu);
+            buttonPanel.add(difficulty);
 
             buttonPanel.setLayout(new FlowLayout());
             buttonPanel.add(btnNewGameEasy);
@@ -78,7 +98,21 @@ public class Main extends JFrame {
             cp.add(buttonPanel, BorderLayout.SOUTH);
 
             board.EasyGame();
-
+            easy.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.EasyGame();
+                }
+            });
+            medium.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.MediumGame();
+                }
+            });
+            hard.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.HardGame();
+                }
+            });
             pack();
             setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);  // to handle window-closing
             addWindowListener(new WindowAdapter() {
@@ -104,14 +138,44 @@ public class Main extends JFrame {
             JButton btnSolveGame = new JButton("Solve");
             btnSolveGame.addActionListener(e -> board.SolveGame());
             cp.add(btnSolveGame, BorderLayout.SOUTH);
+            // create a menu
+            diffmenu = new JMenu("  Select Difficulty Level  ");
 
-            // btnSolve.addActionListener(e -> board.SolveGame());
+            // create menuitems
+            easy = new JMenuItem("Easy");
+            medium = new JMenuItem("Medium");
+            hard = new JMenuItem("Hard");
+
+            // add menu items to menu
+            diffmenu.add(easy);
+            diffmenu.add(medium);
+            diffmenu.add(hard);
+
+            // add menu to menu bar
+            difficulty.add(diffmenu);
+            buttonPanel.add(difficulty);
+
             buttonPanel.setLayout(new FlowLayout());
             buttonPanel.add(btnNewGameMedium);
             buttonPanel.add(btnSolveGame);
             cp.add(buttonPanel, BorderLayout.SOUTH);
-            // Initialize the game board to start the game
-            board.MediumGame();
+
+            board.EasyGame();
+            easy.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.EasyGame();
+                }
+            });
+            medium.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.MediumGame();
+                }
+            });
+            hard.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.HardGame();
+                }
+            });
 
             pack();     // Pack the UI components, instead of using setSize()
             setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);  // to handle window-closing
@@ -138,13 +202,44 @@ public class Main extends JFrame {
             JButton btnSolveGame = new JButton("Solve");
             btnSolveGame.addActionListener(e -> board.SolveGame());
             cp.add(btnSolveGame, BorderLayout.SOUTH);
+            // create a menu
+            diffmenu = new JMenu("  Select Difficulty Level  ");
+
+            // create menuitems
+            easy = new JMenuItem("Easy");
+            medium = new JMenuItem("Medium");
+            hard = new JMenuItem("Hard");
+
+            // add menu items to menu
+            diffmenu.add(easy);
+            diffmenu.add(medium);
+            diffmenu.add(hard);
+
+            // add menu to menu bar
+            difficulty.add(diffmenu);
+            buttonPanel.add(difficulty);
 
             buttonPanel.setLayout(new FlowLayout());
             buttonPanel.add(btnNewGameHard);
             buttonPanel.add(btnSolveGame);
             cp.add(buttonPanel, BorderLayout.SOUTH);
-            // Initialize the game board to start the game
-            board.HardGame();
+
+            board.EasyGame();
+            easy.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.EasyGame();
+                }
+            });
+            medium.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.MediumGame();
+                }
+            });
+            hard.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.HardGame();
+                }
+            });
 
             pack();
             setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);  // to handle window-closing
@@ -160,47 +255,6 @@ public class Main extends JFrame {
             setVisible(true);
         }
 
-        // Play sound when play game
-        Sound music  = new Sound("words.wav");
-        music.play();
-
-        // Initialize the about menu
-        menuItem = new JMenuItem("About Developer");
-        aboutDeveloper = new JDialog(this, "About Developer", true);
-        Icon developerImage = new ImageIcon("foto-fp.jpg");
-        JLabel labelImage = new JLabel(developerImage); 
-
-        textArea = new JTextArea();
-        textArea.setEditable(false);
-        textArea.setLineWrap(true);
-        textArea.setWrapStyleWord(true);
-        JLabel labelAbout = new JLabel("Capstone Project - Group #3 (2.0 Version)");
-        String aboutText = "This Sudoku and TicTacToe game is part of the final project assignment for the Data Structure and Algorithms course. Sudoku is created by applying the DFS algorithm and the Stack data structure.\n\n"+
-                "The following is our project team:\n" +
-                "1. Andika Cahya Sutisna (5026221013)\n" +
-                "2. Muhammad Ahdaf Amali (5026221129)\n" +
-                "3. Putu Panji Wiradharma (5026221170)\n";
-
-        textArea.setText(aboutText);
-        textArea.setBackground(aboutDeveloper.getBackground());
-        textArea.setBorder(new EmptyBorder(10, 10, 10, 10));
-        aboutDeveloper.setLayout(new BorderLayout());
-        aboutDeveloper.add(labelImage, BorderLayout.NORTH);
-        aboutDeveloper.add(labelAbout, BorderLayout.CENTER);
-        aboutDeveloper.add(textArea, BorderLayout.CENTER);
-        aboutDeveloper.setSize(500, 300);
-        aboutDeveloper.setLocationRelativeTo(null);
-        aboutDeveloper.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        menuItem.addActionListener(e -> {
-            aboutDeveloper.setVisible(true);
-        });
-        
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Menu");
-        menu.add(menuItem);
-        menuBar.add(menu);
-        setJMenuBar(menuBar);
     }
 
     /** The entry main() entry method */

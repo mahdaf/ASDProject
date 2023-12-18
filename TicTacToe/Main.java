@@ -276,60 +276,6 @@ public class Main extends JPanel {
             });
             // Set the content-pane of the JFrame to an instance of main JPanel
             frame.setContentPane(new Main());
-            // Menu about developer
-            JMenuItem menuItem;
-            JDialog aboutDeveloper;
-            JTextArea textArea;
-            menuItem = new JMenuItem("About Developer");
-            aboutDeveloper = new JDialog();
-            Icon developerImage = new ImageIcon("foto-fp.jpg");
-            JLabel labelImage = new JLabel(developerImage); 
-            menuItem.addActionListener(e -> {
-               aboutDeveloper.setVisible(true);
-            });
-
-            JMenuBar menuBar = new JMenuBar();
-            JMenu menu = new JMenu("Menu");
-            menu.add(menuItem);
-            menuBar.add(menu);
-            frame.setJMenuBar(menuBar);
-            
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.pack();
-            frame.setLocationRelativeTo(null); // center the application window
-            frame.setVisible(true);            // show it
-            
-            // Play sound when play game
-            try{
-            Sound music  = new Sound("words.wav");
-            music.play();
-            }catch (Exception e) {
-               // TODO Auto-generated catch block
-               e.printStackTrace();
-           }
-          
-            // Initialize the about menu
-            textArea = new JTextArea();
-            textArea.setEditable(false);
-            textArea.setLineWrap(true);
-            textArea.setWrapStyleWord(true);
-            JLabel labelAbout = new JLabel("Capstone Project - Group #3 (2.0 Version)");
-            String aboutText = "This Sudoku and TicTacToe game is part of the final project assignment for the Data Structure and Algorithms course. Sudoku is created by applying the DFS algorithm and the Stack data structure.\n\n"+
-                     "The following is our project team:\n" +
-                     "1. Andika Cahya Sutisna (5026221013)\n" +
-                     "2. Muhammad Ahdaf Amali (5026221129)\n" +
-                     "3. Putu Panji Wiradharma (5026221170)\n";
-
-            textArea.setText(aboutText);
-            textArea.setBackground(aboutDeveloper.getBackground());
-            textArea.setBorder(new EmptyBorder(10, 10, 10, 10));
-            aboutDeveloper.setLayout(new BorderLayout());
-            aboutDeveloper.add(labelImage, BorderLayout.NORTH);
-            aboutDeveloper.add(labelAbout, BorderLayout.CENTER);
-            aboutDeveloper.add(textArea, BorderLayout.CENTER);
-            aboutDeveloper.setSize(500, 300);
-            aboutDeveloper.setLocationRelativeTo(null);
-            aboutDeveloper.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             
             }
 
