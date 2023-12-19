@@ -16,6 +16,7 @@ class Sound {
     private Clip clip;
     AudioInputStream sound;
 
+    //Method to insert the sound
     public Sound(String soundFile) throws Exception {
             File sc = new File(soundFile);
             sound = AudioSystem.getAudioInputStream(sc);

@@ -20,11 +20,11 @@ public class BoardThree {
    public static final int ROWS = 3;  // ROWS x COLS cells
    public static final int COLS = 3;
    // Define named constants for drawing
-   public static final int CANVAS_WIDTH = Cell.SIZE * COLS;  // the drawing canvas
-   public static final int CANVAS_HEIGHT = Cell.SIZE * ROWS;
+   public static final int CANVAS_WIDTH = Cell.SIZE * COLS;  // The canvas width
+   public static final int CANVAS_HEIGHT = Cell.SIZE * ROWS; // The canvas height
    public static final int GRID_WIDTH = 10;  // Grid-line's width
    public static final int GRID_WIDHT_HALF = GRID_WIDTH / 2; // Grid-line's half-width
-   public static final Color COLOR_GRID = new Color(13, 161,146);  // grid lines
+   public static final Color COLOR_GRID = new Color(13, 161,146);  // Grid lines
    public static final int Y_OFFSET = 1;  // Fine tune for better display
 
    // Define properties (package-visible)
@@ -38,7 +38,7 @@ public class BoardThree {
 
    /** Initialize the game objects (run once) */
    public void initGameThree() {
-      cells = new CellThree[ROWS][COLS]; // allocate the array
+      cells = new CellThree[ROWS][COLS]; // Allocate the array
       for (int row = 0; row < ROWS; ++row) {
          for (int col = 0; col < COLS; ++col) {
             // Allocate element of the array
@@ -52,7 +52,7 @@ public class BoardThree {
    public void newGameThree() {
       for (int row = 0; row < ROWS; ++row) {
          for (int col = 0; col < COLS; ++col) {
-            cells[row][col].newGameThree(); // clear the cell contentThree
+            cells[row][col].newGameThree(); // Clear the cell contentThree
          }
       }
    }
@@ -60,7 +60,7 @@ public class BoardThree {
    /**
     *  The given player makes a move on (selectedRow, selectedCol).
     *  Update cells[selectedRow][selectedCol]. Compute and return the
-    *  new game state (PLAYING, DRAW, CROSS_WON, NOUGHT_WON).
+    *  New game state (PLAYING, DRAW, CROSS_WON, NOUGHT_WON).
     */
    public State stepGameThree(Seed player, int selectedRow, int selectedCol) {
       // Update game cells
@@ -90,11 +90,11 @@ public class BoardThree {
             for (int row = 0; row < ROWS; ++row) {
                 for (int col = 0; col < COLS; ++col) {
                     if (cells[row][col].contentThree == Seed.NO_SEED) {
-                        return State.PLAYING; // still have empty cells
+                        return State.PLAYING; // Still have empty cells
                     }
                 }
             }
-            return State.DRAW; // no empty cell, it's a draw
+            return State.DRAW; // No empty cell, it's a draw
         }
    }
    /** Paint itself on the graphics canvas, given the Graphics context */
@@ -116,7 +116,7 @@ public class BoardThree {
       // Draw all the cells
       for (int row = 0; row < ROWS; ++row) {
          for (int col = 0; col < COLS; ++col) {
-            cells[row][col].paintThree(g);  // ask the cell to paint itself
+            cells[row][col].paintThree(g);  // Ask the cell to paint itself
          }
       }
    }

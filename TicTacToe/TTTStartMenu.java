@@ -22,12 +22,14 @@ public class TTTStartMenu extends JFrame{
 
     public static void main(String[] args) throws Exception {
         
+        //Declare the frame
         JFrame frm = new JFrame("Tic Tac Toe Game");
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         frm.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frm.setMinimumSize(new Dimension(800,700));
         
+        //Declare the button
         JButton btnStart = new JButton("Start");
         btnStart.setFocusable(false);
         btnStart.setVerticalTextPosition(JButton.BOTTOM);
@@ -38,9 +40,11 @@ public class TTTStartMenu extends JFrame{
         frm.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frm.setMinimumSize(new Dimension(650,650));
 
+        //Declare the start menu size
         int btnHeight = 50;
         int btnWidth = 300;
 
+        //Insert the background image
         BufferedImage bgImage = ImageIO.read(new File("TicTacToe/bg-tictactoe.png"));
         Image scaledBgImage = bgImage.getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH);
         ImageIcon backgroundImage = new ImageIcon(scaledBgImage);
@@ -48,11 +52,12 @@ public class TTTStartMenu extends JFrame{
         background.setIcon(backgroundImage);
         background.setHorizontalAlignment(JLabel.CENTER);
 
+        //Declare the menuitem
         JMenuItem menuItem;
         JDialog aboutDeveloper;
         JTextArea textArea;
         
-
+        //Declare the menu bar
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("                              Menu");
         menu.setSize(1000, 50);;
@@ -60,10 +65,12 @@ public class TTTStartMenu extends JFrame{
         menu.setForeground(new Color(34,34,34));
         menu.setBackground(new Color(242,235,211));  
         
+        //Declare the menu size
         int menuHeight = 50;
         int menuWidth = 300;
         menu.setPreferredSize(new Dimension(menuWidth, menuHeight)); 
 
+        //Insert the menu bar with "About Developer" menu item
         menuItem = new JMenuItem("                              About Developer");
         menuItem.setPreferredSize(menu.getPreferredSize());
         aboutDeveloper = new JDialog();
@@ -101,7 +108,7 @@ public class TTTStartMenu extends JFrame{
         aboutDeveloper.setLocationRelativeTo(null);
         aboutDeveloper.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
-
+        //Declare the copyright label
         JLabel Copyright = new JLabel("@Copyright Kelompok 3");
         Copyright.setFont(new Font("Poppins", Font.PLAIN,14));
         Copyright.setForeground(Color.WHITE);
@@ -151,6 +158,7 @@ public class TTTStartMenu extends JFrame{
             
         });
 
+        //Set bounds of each part in start menu
         frm.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
                 Dimension size = frm.getSize();
@@ -179,7 +187,6 @@ public class TTTStartMenu extends JFrame{
         frm.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - frm.getWidth()) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - frm.getHeight()) / 2);
 
         frm.add(Copyright);
-        // frame.add(logo);
         frm.add(btnStart);
         frm.add(background);
 

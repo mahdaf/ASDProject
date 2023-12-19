@@ -14,10 +14,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Cell extends JTextField {
-    private static final long serialVersionUID = 1L;  // to prevent serial warning
+    private static final long serialVersionUID = 1L;  // To prevent serial warning
 
     // Define named constants for JTextField's colors and fonts
-    //  to be chosen based on CellStatus
+    //  To be chosen based on CellStatus
     public static final Color BG_GIVEN = new Color(20, 189, 172); // RGB new Color(68, 68, 68)
     public static final Color FG_GIVEN = Color.white;
     public static final Color FG_NOT_GIVEN = Color.WHITE;
@@ -81,7 +81,6 @@ public class Cell extends JTextField {
             status = CellStatus.TO_GUESS;
         }
         this.number= num;
-        // status = CellStatus.TO_GUESS; // Reset the cell status
         paint(); // Repaint the cell
     }
 
@@ -99,9 +98,9 @@ public class Cell extends JTextField {
             super.setEditable(true);
             super.setBackground(BG_TO_GUESS);
             super.setForeground(FG_NOT_GIVEN);
-        } else if (status == CellStatus.CORRECT_GUESS) {  // from TO_GUESS
+        } else if (status == CellStatus.CORRECT_GUESS) {  // From TO_GUESS
             super.setBackground(BG_CORRECT_GUESS);
-        } else if (status == CellStatus.WRONG_GUESS) {    // from TO_GUESS
+        } else if (status == CellStatus.WRONG_GUESS) {    // From TO_GUESS
             super.setBackground(BG_WRONG_GUESS);
         }
     }

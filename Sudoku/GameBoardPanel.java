@@ -41,7 +41,7 @@ public class GameBoardPanel extends JPanel{
 
     /** Constructor */
     public GameBoardPanel() {
-        super.setLayout(new BorderLayout());  // JPanel
+        super.setLayout(new BorderLayout());
         super.add(sudokuGrid);
         topbox.setOpaque(false);
         topbox.setLayout(new FlowLayout(FlowLayout.CENTER,20,0));
@@ -228,34 +228,34 @@ public class GameBoardPanel extends JPanel{
             if (isSolved()) {
                 Object[] opsi = {"Yes", "No"};
 
-                // Menampilkan dialog dengan opsi dan mendapatkan nilai kembaliannya
+                // Displays a dialog with options and gets their return values
                 int pilihan = JOptionPane.showOptionDialog(
-                        null, // Komponen induk (null untuk dialog tengah layar)
-                        "Do you wanna play again?", // Pesan dialog
-                        "Congratulations! " + playerName, // Judul dialog
-                        JOptionPane.DEFAULT_OPTION, // Tipe ikon (DEFAULT_OPTION untuk ikon default)
-                        JOptionPane.QUESTION_MESSAGE, // Tipe pesan (QUESTION_MESSAGE untuk pertanyaan)
-                        null, // Icon kustom (null untuk ikon default)
-                        opsi, // Daftar opsi
-                        opsi[0]); // Opsi default yang terpilih
+                        null, // Parent component (null for middle of screen dialog)
+                        "Do you wanna play again?", // Dialog message
+                        "Welcome! " + playerName, // Dialog title
+                        JOptionPane.DEFAULT_OPTION, // Icon type (DEFAULT_OPTION for default icon)
+                        JOptionPane.QUESTION_MESSAGE, // Message type (QUESTION_MESSAGE for question)
+                        null, // Custom icon (null for default icon)
+                        opsi, // Option list
+                        opsi[0]); // Chosen default option
         
-                // Menggunakan nilai kembaliannya untuk menentukan tindakan selanjutnya
+                // Uses the return value to determine the next action
                 if (pilihan == JOptionPane.CLOSED_OPTION) {
                     System.out.println("Dialog ditutup tanpa pemilihan.");
                     System.exit(0);
                 } else if (opsi[pilihan]==opsi[0]){
                     Object[] opsiDiff = {"Easy", "Medium", "Hard"};
 
-                // Menampilkan dialog dengan opsi dan mendapatkan nilai kembaliannya
+                // Displays a dialog with options and gets their return values
                     int choice = JOptionPane.showOptionDialog(
-                            null, // Komponen induk (null untuk dialog tengah layar)
-                            "Select Difficulties", // Pesan dialog
-                            "Difficulties ", // Judul dialog
-                            JOptionPane.DEFAULT_OPTION, // Tipe ikon (DEFAULT_OPTION untuk ikon default)
-                            JOptionPane.QUESTION_MESSAGE, // Tipe pesan (QUESTION_MESSAGE untuk pertanyaan)
-                            null, // Icon kustom (null untuk ikon default)
-                            opsiDiff, // Daftar opsi
-                            opsiDiff[0]); // Opsi default yang terpilih
+                            null, // Parent component (null for middle of screen dialog)
+                            "Select Difficulties", // Dialog message
+                            "Difficulties ", // Dialog title
+                            JOptionPane.DEFAULT_OPTION, // Icon type (DEFAULT_OPTION for default icon)
+                            JOptionPane.QUESTION_MESSAGE, // Message type (QUESTION_MESSAGE for question)
+                            null, // Custom icon (null for default icon)
+                            opsiDiff, // Option list
+                            opsiDiff[0]); // Chosen default option
                     if (opsiDiff[choice] == opsiDiff[0]) {
                         
                         EasyGame();

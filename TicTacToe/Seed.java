@@ -10,6 +10,6 @@ package TicTacToe;
  * 3 - 5026221170 - Putu Panji Wiradharma
  */
 
-public enum Seed {   // to save as "Seed.java"
+public enum Seed {   // To save as "Seed.java"
    CROSS, NOUGHT, NO_SEED
 }

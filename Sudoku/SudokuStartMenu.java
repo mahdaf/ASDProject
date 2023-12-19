@@ -23,12 +23,14 @@ public class SudokuStartMenu extends JFrame{
 
     public static void main(String[] args) throws Exception {
         
+        //Frame declaration
         JFrame frm = new JFrame("Sudoku Game");
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         frm.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frm.setMinimumSize(new Dimension(800,700));
         
+        //Button declaration
         JButton btnStart = new JButton("Start");
         btnStart.setFocusable(false);
         btnStart.setVerticalTextPosition(JButton.BOTTOM);
@@ -39,10 +41,11 @@ public class SudokuStartMenu extends JFrame{
         frm.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frm.setMinimumSize(new Dimension(650,650));
 
+        //Button size
         int btnHeight = 50;
         int btnWidth = 300;
 
-
+        //Insert background image
         BufferedImage bgImage = ImageIO.read(new File("Sudoku/bg-sudoku.png"));
         Image scaledBgImage = bgImage.getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH);
         ImageIcon backgroundImage = new ImageIcon(scaledBgImage);
@@ -50,11 +53,12 @@ public class SudokuStartMenu extends JFrame{
         background.setIcon(backgroundImage);
         background.setHorizontalAlignment(JLabel.CENTER);
 
+        //Declare menu item
         JMenuItem menuItem;
         JDialog aboutDeveloper;
         JTextArea textArea;
         
-
+        //Menu item
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("                              Menu");
         menu.setSize(1000, 50);;
@@ -75,11 +79,12 @@ public class SudokuStartMenu extends JFrame{
            aboutDeveloper.setVisible(true);
         });
         
+        //Add the menu item into menu
         menu.add(menuItem);
         menuBar.add(menu);
         frm.add(menuBar);
       
-        // Initialize the about menu
+        //Initialize the about menu
         textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setLineWrap(true);
@@ -103,6 +108,7 @@ public class SudokuStartMenu extends JFrame{
         aboutDeveloper.setLocationRelativeTo(null);
         aboutDeveloper.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
+        //Copyright label
         JLabel Copyright = new JLabel("@Copyright Kelompok 3");
         Copyright.setFont(new Font("Poppins", Font.PLAIN,14));
         Copyright.setForeground(Color.WHITE);
@@ -123,6 +129,7 @@ public class SudokuStartMenu extends JFrame{
             
         });
 
+        //Set bounds of each part of start menu
         frm.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
                 Dimension size = frm.getSize();
@@ -151,7 +158,6 @@ public class SudokuStartMenu extends JFrame{
         frm.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - frm.getWidth()) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - frm.getHeight()) / 2);
 
         frm.add(Copyright);
-        // frame.add(logo);
         frm.add(btnStart);
         frm.add(background);
 

@@ -15,9 +15,11 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Main extends JFrame {
-    private static final long serialVersionUID = 1L;  // to prevent serial warning
+    
+    // Private variables
+    private static final long serialVersionUID = 1L;  // To prevent serial warning
     private String playerName;
-    // private variables
+   
     GameBoardPanel board = new GameBoardPanel();
     JButton btnNewGame = new JButton("New Game");
     JPanel buttonPanel = new JPanel();
@@ -25,8 +27,6 @@ public class Main extends JFrame {
     JMenuBar difficulty;
     JMenu diffmenu;
     JMenuItem easy, medium, hard;
-    
-    // Menu about developer
     
 
     public String getPlayerName() {
@@ -74,20 +74,20 @@ public class Main extends JFrame {
             cp.add(btnSolve, BorderLayout.SOUTH);
             difficulty = new JMenuBar();
 
-            // create a menu
+            // Create a menu
             diffmenu = new JMenu("  Select Difficulty Level  ");
 
-            // create menuitems
+            // Create menuitems
             easy = new JMenuItem("Easy");
             medium = new JMenuItem("Medium");
             hard = new JMenuItem("Hard");
 
-            // add menu items to menu
+            // Add menu items to menu
             diffmenu.add(easy);
             diffmenu.add(medium);
             diffmenu.add(hard);
 
-            // add menu to menu bar
+            // Add menu to menu bar
             difficulty.add(diffmenu);
             buttonPanel.add(difficulty);
 
@@ -113,7 +113,7 @@ public class Main extends JFrame {
                 }
             });
             pack();
-            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);  // to handle window-closing
+            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);  // To handle window-closing
             addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent a) {
@@ -126,7 +126,6 @@ public class Main extends JFrame {
         } else if (opsi[pilihan]==opsi[1]){
             Container cp = getContentPane();
             cp.setLayout(new BorderLayout());
-
             cp.add(board, BorderLayout.CENTER);
 
             // Add a button to the south to re-start the game via board.newGame()
@@ -137,20 +136,20 @@ public class Main extends JFrame {
             JButton btnSolveGame = new JButton("Solve");
             btnSolveGame.addActionListener(e -> board.SolveGame());
             cp.add(btnSolveGame, BorderLayout.SOUTH);
-            // create a menu
+            // Create a menu
             diffmenu = new JMenu("  Select Difficulty Level  ");
 
-            // create menuitems
+            // Create menuitems
             easy = new JMenuItem("Easy");
             medium = new JMenuItem("Medium");
             hard = new JMenuItem("Hard");
 
-            // add menu items to menu
+            // Add menu items to menu
             diffmenu.add(easy);
             diffmenu.add(medium);
             diffmenu.add(hard);
 
-            // add menu to menu bar
+            // Add menu to menu bar
             difficulty.add(diffmenu);
             buttonPanel.add(difficulty);
 
@@ -177,7 +176,7 @@ public class Main extends JFrame {
             });
 
             pack();     // Pack the UI components, instead of using setSize()
-            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);  // to handle window-closing
+            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);  // To handle window-closing
             addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent a) {
@@ -190,7 +189,6 @@ public class Main extends JFrame {
         } else if (opsi[pilihan]==opsi[2]){
             Container cp = getContentPane();
             cp.setLayout(new BorderLayout());
-
             cp.add(board, BorderLayout.CENTER);
 
             // Add a button to the south to re-start the game via board.newGame()
@@ -204,17 +202,17 @@ public class Main extends JFrame {
             // create a menu
             diffmenu = new JMenu("  Select Difficulty Level  ");
 
-            // create menuitems
+            // Create menuitems
             easy = new JMenuItem("Easy");
             medium = new JMenuItem("Medium");
             hard = new JMenuItem("Hard");
 
-            // add menu items to menu
+            // Add menu items to menu
             diffmenu.add(easy);
             diffmenu.add(medium);
             diffmenu.add(hard);
 
-            // add menu to menu bar
+            // Add menu to menu bar
             difficulty.add(diffmenu);
             buttonPanel.add(difficulty);
 
@@ -241,7 +239,7 @@ public class Main extends JFrame {
             });
 
             pack();
-            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);  // to handle window-closing
+            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);  // To handle window-closing
             addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent a) {

@@ -20,7 +20,7 @@ public class Board {
    public static final int ROWS = 5;  // ROWS x COLS cells
    public static final int COLS = 5;
    // Define named constants for drawing
-   public static final int CANVAS_WIDTH = Cell.SIZE * COLS;  // the drawing canvas
+   public static final int CANVAS_WIDTH = Cell.SIZE * COLS;  // The drawing canvas
    public static final int CANVAS_HEIGHT = Cell.SIZE * ROWS;
    public static final int GRID_WIDTH = 10;  // Grid-line's width
    public static final int GRID_WIDHT_HALF = GRID_WIDTH / 2; // Grid-line's half-width
@@ -38,7 +38,7 @@ public class Board {
 
    /** Initialize the game objects (run once) */
    public void initGame() {
-      cells = new Cell[ROWS][COLS]; // allocate the array
+      cells = new Cell[ROWS][COLS]; // Allocate the array
       for (int row = 0; row < ROWS; ++row) {
          for (int col = 0; col < COLS; ++col) {
             // Allocate element of the array
@@ -52,7 +52,7 @@ public class Board {
    public void newGame() {
       for (int row = 0; row < ROWS; ++row) {
          for (int col = 0; col < COLS; ++col) {
-            cells[row][col].newGame(); // clear the cell content
+            cells[row][col].newGame(); // Clear the cell content
          }
       }
    }
@@ -60,32 +60,33 @@ public class Board {
    /**
     *  The given player makes a move on (selectedRow, selectedCol).
     *  Update cells[selectedRow][selectedCol]. Compute and return the
-    *  new game state (PLAYING, DRAW, CROSS_WON, NOUGHT_WON).
+    *  New game state (PLAYING, DRAW, CROSS_WON, NOUGHT_WON).
     */
    public State stepGame(Seed player, int selectedRow, int selectedCol) {
       // Update game cells
       cells[selectedRow][selectedCol].content = player;
 
       // Compute and return the new game state
-      if (cells[selectedRow][0].content == player  // 3-in-the-row
+      if (cells[selectedRow][0].content == player  // 5-in-the-row
                 && cells[selectedRow][1].content == player
                 && cells[selectedRow][2].content == player
                 && cells[selectedRow][3].content == player
                 && cells[selectedRow][4].content == player
-                || cells[0][selectedCol].content == player // 3-in-the-column
+
+                || cells[0][selectedCol].content == player // 5-in-the-column
                 && cells[1][selectedCol].content == player
                 && cells[2][selectedCol].content == player
                 && cells[3][selectedCol].content == player
                 && cells[4][selectedCol].content == player
 
-                || selectedRow == selectedCol  // 3-in-the-diagonal
+                || selectedRow == selectedCol  // 5-in-the-diagonal
                 && cells[0][0].content == player
                 && cells[1][1].content == player
                 && cells[2][2].content == player
                 && cells[3][3].content == player
                 && cells[4][4].content == player
 
-                || selectedRow + selectedCol == 4 // 3-in-the-opposite-diagonal
+                || selectedRow + selectedCol == 4 // 5-in-the-opposite-diagonal
                 && cells[0][4].content == player
                 && cells[1][3].content == player
                 && cells[2][2].content == player
@@ -97,11 +98,11 @@ public class Board {
             for (int row = 0; row < ROWS; ++row) {
                 for (int col = 0; col < COLS; ++col) {
                     if (cells[row][col].content == Seed.NO_SEED) {
-                        return State.PLAYING; // still have empty cells
+                        return State.PLAYING; // Still have empty cells
                     }
                 }
             }
-            return State.DRAW; // no empty cell, it's a draw
+            return State.DRAW; // No empty cell, it's a draw
         }
    }
    /** Paint itself on the graphics canvas, given the Graphics context */
@@ -122,7 +123,7 @@ public class Board {
       // Draw all the cells
       for (int row = 0; row < ROWS; ++row) {
          for (int col = 0; col < COLS; ++col) {
-            cells[row][col].paint(g);  // ask the cell to paint itself
+            cells[row][col].paint(g);  // Ask the cell to paint itself
          }
       }
    }

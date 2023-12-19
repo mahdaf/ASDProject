@@ -22,7 +22,7 @@ public class CellThree {
    // Symbols (cross/nought) are displayed inside a cell, with padding from border
    public static final int PADDING = SIZE / 5;
    public static final int SEED_SIZE = SIZE - PADDING * 2;
-   public static final int SEED_STROKE_WIDTH = 8; // pen's stroke width
+   public static final int SEED_STROKE_WIDTH = 8; // Pen's stroke width
 
    // Define properties (package-visible)
    /** Content of this cell (Seed.EMPTY, Seed.CROSS, or Seed.NOUGHT) */
@@ -54,10 +54,10 @@ public class CellThree {
       int x1 = col * SIZE + PADDING;
       int y1 = row * SIZE + PADDING;
       if (contentThree == Seed.CROSS) {
-         g2d.setColor(Main.COLOR_CROSS);  // draw a 2-line cross
+         g2d.setColor(Main.COLOR_CROSS);  // Draw a 2-line cross
          g2d.setColor(Main.COLOR_CROSS);
          g2d.fillRect(x1, y1, SEED_SIZE, SEED_SIZE);
-      } else if (contentThree == Seed.NOUGHT) {  // draw a circle
+      } else if (contentThree == Seed.NOUGHT) {  // Draw a circle
          g2d.setColor(Main.COLOR_NOUGHT);
          g2d.drawRect(x1, y1, SEED_SIZE, SEED_SIZE);
       }

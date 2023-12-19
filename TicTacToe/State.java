@@ -10,6 +10,6 @@ package TicTacToe;
  * 3 - 5026221170 - Putu Panji Wiradharma
  */
 
-public enum State {  // to save as "State.java"
+public enum State {  // To save as "State.java"
    PLAYING, DRAW, CROSS_WON, NOUGHT_WON
 }

@@ -52,10 +52,10 @@ public class Cell {
       int x1 = col * SIZE + PADDING;
       int y1 = row * SIZE + PADDING;
       if (content == Seed.CROSS) {
-         g2d.setColor(Main.COLOR_CROSS);  // draw a 2-line cross
+         g2d.setColor(Main.COLOR_CROSS);  // Draw a 2-line cross
          g2d.setColor(Main.COLOR_CROSS);
          g2d.fillRect(x1, y1, SEED_SIZE, SEED_SIZE);
-      } else if (content == Seed.NOUGHT) {  // draw a circle
+      } else if (content == Seed.NOUGHT) {  // Draw a circle
          g2d.setColor(Main.COLOR_NOUGHT);
          g2d.drawRect(x1, y1, SEED_SIZE, SEED_SIZE);
       }
