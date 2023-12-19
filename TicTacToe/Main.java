@@ -30,7 +30,6 @@ public class Main extends JPanel {
     private int player1ScoreThree;
     private int player2ScoreThree;
     private int drawCountThree;
-    
 
 // Define named constants for the drawing graphics
    public static final String TITLE = "Tic Tac Toe";
@@ -65,6 +64,29 @@ public class Main extends JPanel {
    private JLabel scoreLabel;
    private JLabel scoreLabelThree;
 
+   
+     /** Method untuk mengupdate skor saat ada kemenangan atau hasil seri */
+     public void updateScore(State currentState) {
+      if (currentState == State.CROSS_WON) {
+          player1Score++;
+      } else if (currentState == State.NOUGHT_WON) {
+          player2Score++;
+      } else if (currentState == State.DRAW) {
+          drawCount++;
+      }
+   }
+
+   /** Method untuk mengupdate skor saat ada kemenangan atau hasil seri */
+   public void updateScoreThree(State currentStateThree) {
+      if (currentStateThree == State.CROSS_WON) {
+          player1ScoreThree++;
+      } else if (currentStateThree == State.NOUGHT_WON) {
+          player2ScoreThree++;
+      } else if (currentStateThree == State.DRAW) {
+          drawCountThree++;
+      }
+   }
+
    /** Constructor to setup the UI and game components */
    public Main() {
    statusBar = new JLabel();
@@ -75,14 +97,6 @@ public class Main extends JPanel {
    player1ScoreThree=0;
    player2ScoreThree=0;
    drawCountThree=0;
-   
-   scoreLabel = new JLabel(player1Name + ": " + player1Score +
-                "  |  " + player2Name + ": " + player2Score + "  |  Draw: " + drawCount);
-   scoreLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-
-   scoreLabelThree = new JLabel(player1Name + ": " + player1ScoreThree +
-                "  |  " + player2Name + ": " + player2ScoreThree + "  |  Draw: " + drawCountThree);
-   scoreLabelThree.setVerticalAlignment(SwingConstants.BOTTOM);
 
     // Meminta input nama pemain 1
     player1Name = JOptionPane.showInputDialog("Masukkan nama Player 1:");
@@ -172,7 +186,6 @@ public class Main extends JPanel {
       // This JPanel fires MouseEvent
       
       if(opsi[boardSizeIndex]==opsi[0]){
-         super.setPreferredSize(new Dimension(BoardThree.CANVAS_WIDTH, BoardThree.CANVAS_HEIGHT + 30));
          initGameThree();
          newGameThree();
 
@@ -183,14 +196,27 @@ public class Main extends JPanel {
          statusBarThree.setPreferredSize(new Dimension(300, 30));
          statusBarThree.setHorizontalAlignment(JLabel.LEFT);
          statusBarThree.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 12));
+         // updateScoreThree(currentStateThree);
 
-         super.setLayout(new BorderLayout());
-         super.add(scoreLabelThree, BorderLayout.NORTH); 
-         super.add(statusBarThree, BorderLayout.PAGE_END); // same as SOUTH
-         super.setBorder(BorderFactory.createLineBorder(COLOR_BG_STATUS, 2, false));
-         
+         scoreLabelThree = new JLabel(player1Name + ": " + player1ScoreThree +
+         "  |  " + player2Name + ": " + player2ScoreThree + "  |  Draw: " + drawCountThree);
+    scoreLabelThree.setFont(FONT_STATUS);
+    scoreLabelThree.setBackground(COLOR_BG_STATUS);
+    scoreLabelThree.setOpaque(true);
+    scoreLabelThree.setPreferredSize(new Dimension(300, 30));
+    scoreLabelThree.setHorizontalAlignment(JLabel.LEFT);
+    scoreLabelThree.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 12));
+
+    JPanel statusPanel = new JPanel(new BorderLayout());
+    statusPanel.add(statusBarThree, BorderLayout.PAGE_START); // letakkan di atas (PAGE_START)
+    statusPanel.add(scoreLabelThree, BorderLayout.PAGE_END); // letakkan di bawah (PAGE_END)
+
+    super.setLayout(new BorderLayout());
+    super.add(statusPanel, BorderLayout.PAGE_END); // Gunakan panel baru yang berisi statusBarThree dan scoreLabel, dan letakkan di bawah (PAGE_END)
+    super.setPreferredSize(new Dimension(BoardThree.CANVAS_WIDTH, BoardThree.CANVAS_HEIGHT + 60));
+    // Menyesuaikan tinggi untuk statusBarThree dan scoreLabel
+    super.setBorder(BorderFactory.createLineBorder(COLOR_BG_STATUS, 2, false));
       } else if (opsi[boardSizeIndex]==opsi[1]){
-         super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 30));
          initGame();
          newGame();
 
@@ -201,35 +227,29 @@ public class Main extends JPanel {
          statusBar.setPreferredSize(new Dimension(300, 30));
          statusBar.setHorizontalAlignment(JLabel.LEFT);
          statusBar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 12));
+       
+         scoreLabel = new JLabel(player1Name + ": " + player1Score +
+                "  |  " + player2Name + ": " + player2Score + "  |  Draw: " + drawCount);
+         scoreLabel.setFont(FONT_STATUS);
+         scoreLabel.setBackground(COLOR_BG_STATUS);
+         scoreLabel.setOpaque(true);
+         scoreLabel.setPreferredSize(new Dimension(300, 30));
+         scoreLabel.setHorizontalAlignment(JLabel.LEFT);
+         scoreLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 12));
+     
+         JPanel statusPanel = new JPanel(new BorderLayout());
+         statusPanel.add(statusBar, BorderLayout.PAGE_START); // letakkan di atas (PAGE_START)
+         statusPanel.add(scoreLabel, BorderLayout.PAGE_END); // letakkan di bawah (PAGE_END)
+     
          super.setLayout(new BorderLayout());
-         super.add(scoreLabel, BorderLayout.NORTH); 
-         super.add(statusBar, BorderLayout.PAGE_END); // same as SOUTH
+         super.add(statusPanel, BorderLayout.PAGE_END); // Gunakan panel baru yang berisi statusBar dan scoreLabel, dan letakkan di bawah (PAGE_END)
+         super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 60));
+         // Menyesuaikan tinggi untuk statusBar dan scoreLabel
          super.setBorder(BorderFactory.createLineBorder(COLOR_BG_STATUS, 2, false));
       } 
    }
+
   
-    /** Method untuk mengupdate skor saat ada kemenangan atau hasil seri */
-   public void updateScore(State currentState) {
-      if (currentState == State.CROSS_WON) {
-          player1Score++;
-      } else if (currentState == State.NOUGHT_WON) {
-          player2Score++;
-      } else if (currentState == State.DRAW) {
-          drawCount++;
-      }
-   }
-
-   /** Method untuk mengupdate skor saat ada kemenangan atau hasil seri */
-   public void updateScoreThree(State currentStateThree) {
-      if (currentStateThree == State.CROSS_WON) {
-          player1ScoreThree++;
-      } else if (currentStateThree == State.NOUGHT_WON) {
-          player2ScoreThree++;
-      } else if (currentStateThree == State.DRAW) {
-          drawCountThree++;
-      }
-   }
-
    /** Initialize the game (run once) */
    public void initGame() {
       board = new Board();  // allocate the game-board
@@ -268,31 +288,31 @@ public class Main extends JPanel {
                boardThree.cells[row][col].contentThree = Seed.NO_SEED; // Reset all cells
             }
          }
-        updateScoreThree(currentStateThree);
+         updateScoreThree(currentStateThree);
          currentPlayerThree = Seed.CROSS;    // Set the starting player
          currentStateThree = State.PLAYING;  // Set the game state to playing
       } else {
-         // If the board is null, initialize it
-        updateScoreThree(currentStateThree);
+            // If the board is null, initialize it
+         updateScoreThree(currentStateThree);
          initGameThree();
          newGameThree(); // Call newGame() again to ensure proper resetting
       }
    }
-  
+
    /** Custom painting codes on this JPanel */
    @Override
    public void paintComponent(Graphics g) {  // Callback via repaint()
 
       super.paintComponent(g);
-      
+      setBackground(COLOR_BG); // set its background color
+
       // Print status-bar message
       if (currentState == State.PLAYING) {
-        board.paint(g);
+         board.paint(g);
         statusBar.setForeground(Color.BLACK);
-        setBackground(COLOR_BG); // set its background color
         statusBar.setText((currentPlayer == Seed.CROSS) ?
-               player1Name + "'s Turn"  :  player2Name + "'s Turn");
-                  if(scoreLabel != null){
+                player1Name + "'s Turn"  :  player2Name + "'s Turn");
+                if(scoreLabel != null){
                   scoreLabel.setText(player1Name + ": " + player1Score +
                   "  |  " + player2Name + ": " + player2Score + "  |  Draw: " + drawCount);
                   }
@@ -300,23 +320,19 @@ public class Main extends JPanel {
          board.paint(g);
          statusBar.setForeground(Color.RED);
          statusBar.setText("It's a Draw! Click to play again.");
-        
       } else if (currentState == State.CROSS_WON) {
          board.paint(g);
          statusBar.setForeground(new Color(8, 137,91));
          statusBar.setText( player1Name +" Won! Click to play again.");
-        
       } else if (currentState == State.NOUGHT_WON) {
          board.paint(g);
          statusBar.setForeground(new Color(8, 137,91));
          statusBar.setText( player2Name +" Won! Click to play again.");
-       
       }
 
       if (currentStateThree == State.PLAYING) {
          boardThree.paintThree(g);  // ask the game board to paint itself
         statusBarThree.setForeground(Color.BLACK);
-        setBackground(COLOR_BG); // set its background color
         statusBarThree.setText((currentPlayerThree == Seed.CROSS) ?
                 player1Name + "'s Turn"  :  player2Name + "'s Turn");
                 if(scoreLabelThree != null){
@@ -327,17 +343,14 @@ public class Main extends JPanel {
          boardThree.paintThree(g);  // ask the game board to paint itself
          statusBarThree.setForeground(Color.RED);
          statusBarThree.setText("It's a Draw! Click to play again.");
-
       } else if (currentStateThree == State.CROSS_WON) {
          boardThree.paintThree(g);  // ask the game board to paint itself
          statusBarThree.setForeground(new Color(8, 137,91));
          statusBarThree.setText( player1Name +" Won! Click to play again.");
-         
       } else if (currentStateThree == State.NOUGHT_WON) {
          boardThree.paintThree(g);  // ask the game board to paint itself
          statusBarThree.setForeground(new Color(8, 137,91));
          statusBarThree.setText( player2Name +" Won! Click to play again.");
-       
       }
    }
 
@@ -375,10 +388,9 @@ public class Main extends JPanel {
                   }
                }
             });
-         
-            menu.add(resetMenuItem);
-
             
+            
+            menu.add(resetMenuItem);
             menuBar.add(menu);
             frame.setJMenuBar(menuBar);
             
