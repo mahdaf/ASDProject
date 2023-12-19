@@ -48,7 +48,7 @@ public class GameBoardPanel extends JPanel{
         topbox.setPreferredSize(new Dimension(BOARD_WIDTH,50));
         super.add(topbox, BorderLayout.NORTH);
         topbox.add(mistakeslabel);
-        mistakeslabel.setFont(new Font("Poppins", Font.PLAIN,30));
+        mistakeslabel.setFont(new Font("Poppins", Font.BOLD,25));
 
         leftbox.setOpaque(false);
         leftbox.setLayout(new FlowLayout(FlowLayout.CENTER,0,20));
@@ -66,7 +66,7 @@ public class GameBoardPanel extends JPanel{
         super.add(bottombox, BorderLayout.SOUTH);
         sudokuGrid.setLayout(new GridLayout(SudokuConstants.GRID_SIZE, SudokuConstants.GRID_SIZE));
         bottombox.add(Difficultylabel);
-        Difficultylabel.setFont(new Font("Poppins", Font.PLAIN,30));
+        Difficultylabel.setFont(new Font("Poppins", Font.PLAIN,15));
 
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
             for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
@@ -113,6 +113,7 @@ public class GameBoardPanel extends JPanel{
         this.playerName = playerName;
     }
 
+
     public void SolveGame(){
         
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
@@ -121,49 +122,47 @@ public class GameBoardPanel extends JPanel{
             }
         }
     }
-
     /**
      * Generate a new puzzle; and reset the gameboard of cells based on the puzzle.
      * You can call this method to start a new game.
      */
-    public void EasyGame() {
-        puzzle.generateEasyPuzzle();;
-        Difficultylabel.setText("Easy");
-        mistake=0;
-        mistakeslabel.setText("Mistakes: "+mistake+"/3");
-        // Initialize all the 9x9 cells, based on the puzzle.
-        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
-            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-                cells[row][col].newGame(puzzle.numbers[row][col], puzzle.isGiven[row][col]);
+    public void NewGame(int pilihan){
+        if(pilihan == 0){
+            puzzle.generateEasyPuzzle();;
+            Difficultylabel.setText("Easy");
+            mistake=0;
+            mistakeslabel.setText("Mistakes: "+mistake+"/3");
+            // Initialize all the 9x9 cells, based on the puzzle.
+            for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+                for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                    cells[row][col].newGame(puzzle.numbers[row][col], puzzle.isGiven[row][col]);
+                }
+            }
+        }else if (pilihan == 1) {
+            puzzle.generateMediumPuzzle();
+            Difficultylabel.setText("Medium");
+            mistake=0;
+            mistakeslabel.setText("Mistakes: "+mistake+"/3");
+            // Initialize all the 9x9 cells, based on the puzzle.
+            for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+                for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                    cells[row][col].newGame(puzzle.numbers[row][col], puzzle.isGiven[row][col]);
+                }
+            }
+        }else if(pilihan == 2){
+            puzzle.generateHardPuzzle();;
+            Difficultylabel.setText("Hard");
+            mistake=0;
+            mistakeslabel.setText("Mistakes: "+mistake+"/3");
+            // Initialize all the 9x9 cells, based on the puzzle.
+            for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+                for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                    cells[row][col].newGame(puzzle.numbers[row][col], puzzle.isGiven[row][col]);
             }
         }
-    }
-
-    public void MediumGame() {
-        puzzle.generateMediumPuzzle();
-        Difficultylabel.setText("Medium");
-        mistake=0;
-        mistakeslabel.setText("Mistakes: "+mistake+"/3");
-        // Initialize all the 9x9 cells, based on the puzzle.
-        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
-            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-                cells[row][col].newGame(puzzle.numbers[row][col], puzzle.isGiven[row][col]);
-            }
         }
-    }
-
-    public void HardGame() {
-        puzzle.generateHardPuzzle();;
-        Difficultylabel.setText("Hard");
-        mistake=0;
-        mistakeslabel.setText("Mistakes: "+mistake+"/3");
-        // Initialize all the 9x9 cells, based on the puzzle.
-        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
-            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-                cells[row][col].newGame(puzzle.numbers[row][col], puzzle.isGiven[row][col]);
-            }
-        }
-    }
+    } 
+ 
     /**
      * Return true if the puzzle is solved
      * i.e., none of the cell have status of TO_GUESS or WRONG_GUESS
@@ -215,8 +214,11 @@ public class GameBoardPanel extends JPanel{
                 sourceCell.status = CellStatus.WRONG_GUESS;
                 mistake+=1;
             }
-            mistakeslabel.setText("Mistakes: "+mistake+"/9");
-            
+            mistakeslabel.setText("Mistakes: "+mistake+"/3");
+            if (mistake==3) {
+                JOptionPane.showMessageDialog(null, "You Failed");
+                SolveGame();
+            }
 
             sourceCell.paint();   // re-paint this cell based on its status
 
@@ -258,24 +260,23 @@ public class GameBoardPanel extends JPanel{
                             opsiDiff[0]); // Opsi default yang terpilih
                     if (opsiDiff[choice] == opsiDiff[0]) {
                         
-                        EasyGame();
+                        NewGame(choice);
 
                     } else if (opsiDiff[choice]==opsiDiff[1]){
                         
-                        MediumGame();
+                        NewGame(choice);
 
                     } else if (opsiDiff[choice]==opsiDiff[2]){
                         
-                        HardGame();
+                        NewGame(choice);
                     } 
                 } else {
                    JOptionPane.showMessageDialog(null, "Thank you for playing");
                    System.exit(0);
                 }
 
-                if (mistake>=3) {
-                JOptionPane.showMessageDialog(null, "You Failed");
-            }
+                
+            
             }
         }
     }
