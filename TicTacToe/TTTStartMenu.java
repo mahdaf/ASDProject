@@ -59,7 +59,7 @@ public class TTTStartMenu extends JFrame{
         
         //Declare the menu bar
         JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("                              Menu");
+        JMenu menu = new JMenu("                          Menu");
         menu.setSize(1000, 50);;
         menu.setFont(new Font("Poppins",Font.BOLD,17));
         menu.setForeground(new Color(34,34,34));
