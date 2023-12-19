@@ -29,6 +29,11 @@ public class TTTStartMenu extends JFrame{
         frm.setMinimumSize(new Dimension(800,700));
         
         JButton btnStart = new JButton("Start");
+        btnStart.setFocusable(false);
+        btnStart.setVerticalTextPosition(JButton.BOTTOM);
+        btnStart.setFont(new Font("Poppins",Font.BOLD,17));
+        btnStart.setForeground(new Color(34,34,34));
+        btnStart.setBackground(new Color(242,235,211));     
        
         frm.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frm.setMinimumSize(new Dimension(650,650));
@@ -49,8 +54,12 @@ public class TTTStartMenu extends JFrame{
         
 
         JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("                                         Menu");
-        menu.setSize(1000, 50);
+        JMenu menu = new JMenu("                              Menu");
+        menu.setSize(1000, 50);;
+        menu.setFont(new Font("Poppins",Font.BOLD,17));
+        menu.setForeground(new Color(34,34,34));
+        menu.setBackground(new Color(242,235,211));  
+        
         int menuHeight = 50;
         int menuWidth = 300;
         menu.setPreferredSize(new Dimension(menuWidth, menuHeight)); 
@@ -72,9 +81,10 @@ public class TTTStartMenu extends JFrame{
         textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setLineWrap(true);
+        textArea.setFont(new Font("Poppins", Font.PLAIN,13));
         textArea.setWrapStyleWord(true);
         JLabel labelAbout = new JLabel("Capstone Project - Group #3 (2.0 Version)");
-        String aboutText = "This Sudoku and TicTacToe game is part of the final project assignment for the Data Structure and Algorithms course. Sudoku is created by applying the DFS algorithm and the Stack data structure.\n\n"+
+        String aboutText = " This Sudoku and TicTacToe game is part of the final project assignment for the Data Structure and Algorithms course. Sudoku is created by applying the DFS algorithm and the Stack data structure.\n\n"+
                  "The following is our project team:\n" +
                  "1. Andika Cahya Sutisna (5026221013)\n" +
                  "2. Muhammad Ahdaf Amali (5026221129)\n" +
@@ -87,15 +97,14 @@ public class TTTStartMenu extends JFrame{
         aboutDeveloper.add(labelImage, BorderLayout.NORTH);
         aboutDeveloper.add(labelAbout, BorderLayout.CENTER);
         aboutDeveloper.add(textArea, BorderLayout.CENTER);
-        aboutDeveloper.setSize(500, 300);
+        aboutDeveloper.setSize(500, 350);
         aboutDeveloper.setLocationRelativeTo(null);
         aboutDeveloper.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
 
-        JLabel Copyright = new JLabel("KELOMPOK 3");
-        Copyright.setFont(new Font("Poppins", Font.PLAIN,30));
-        Copyright.setForeground(Color.BLACK);
-        Copyright.setOpaque(true);
+        JLabel Copyright = new JLabel("@Copyright Kelompok 3");
+        Copyright.setFont(new Font("Poppins", Font.PLAIN,14));
+        Copyright.setForeground(Color.WHITE);
 
         btnStart.addMouseListener(new MouseAdapter() {
             @Override
