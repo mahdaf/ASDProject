@@ -9,82 +9,32 @@ package Sudoku;
  * 2 - 5026221129 - Muhammad Ahdaf Amali
  * 3 - 5026221170 - Putu Panji Wiradharma
  */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-
 public class Main extends JFrame {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;  // to prevent serial warning
     private String playerName;
-    private GameBoardPanel board = new GameBoardPanel();
-    private JPanel buttonPanel = new JPanel();
-    private JMenuBar difficulty;
-    private JMenu diffmenu;
-    private JMenuItem easy, medium, hard;
+    // private variables
+    GameBoardPanel board = new GameBoardPanel();
+    JButton btnNewGame = new JButton("New Game");
+    JPanel buttonPanel = new JPanel();
+    JButton btnSolve = new JButton("Solve");
+    JMenuBar difficulty;
+    JMenu diffmenu;
+    JMenuItem easy, medium, hard;
+    
+    // Menu about developer
+    
 
     public String getPlayerName() {
-        return playerName;
-    }
-
-    private void updateButtonActions(int pilihan) {
-        
-        buttonPanel.removeAll();
-
-        Container cp = getContentPane();
-        cp.setLayout(new BorderLayout());
-        buttonPanel.setLayout(new FlowLayout());
-        cp.add(board, BorderLayout.CENTER);
-        JButton btnNewGame = new JButton("New Game");
-        JButton btnSolveGame = new JButton("Solve");
-
-        btnNewGame.addActionListener(e -> board.NewGame(pilihan));
-        btnSolveGame.addActionListener(e -> board.SolveGame());
-
-
-        difficulty = new JMenuBar();
-        diffmenu = new JMenu("  Select Difficulty Level  ");
-
-        easy = new JMenuItem("Easy");
-        medium = new JMenuItem("Medium");
-        hard = new JMenuItem("Hard");
-
-        diffmenu.add(easy);
-        diffmenu.add(medium);
-        diffmenu.add(hard);
-
-        difficulty.add(diffmenu);
-        buttonPanel.add(difficulty);
-        buttonPanel.add(btnNewGame);
-        buttonPanel.add(btnSolveGame);
-
-        cp.add(buttonPanel, BorderLayout.SOUTH);
-
-        // Set action listeners for the menu items
-        easy.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int choice  = 0;
-                board.NewGame(choice);
-                updateButtonActions(choice);
-            }
-        });
-        medium.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int choice  = 1;
-                board.NewGame(choice);
-                updateButtonActions(choice);
-            }
-        });
-        hard.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int choice  = 2;
-                board.NewGame(choice);
-                updateButtonActions(choice);
-            }
-        });
-    }
-
-    public Main() throws Exception {
+            return playerName;
+        }
+    // Constructor
+    public Main() throws Exception{
+        // Input player name
         playerName = JOptionPane.showInputDialog("Masukkan nama Player:");
         System.out.println("Player Name: " + playerName);
 
@@ -92,55 +42,229 @@ public class Main extends JFrame {
 
         Object[] opsi = {"Easy", "Medium", "Hard"};
 
-        // Display the option dialog to let the user choose the difficulty
+        // Display an option dialog that have the return value from Object [] opsi
         int pilihan = JOptionPane.showOptionDialog(
-                null,
-                "Select Difficulties",
-                "Difficulties ",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                opsi,
-                opsi[0]);
+                null, // Parent component (null for middle of screen dialog)
+                "Select Difficulties", // Dialog message
+                "Difficulties ", // Dialog title
+                JOptionPane.DEFAULT_OPTION, // Icon type (DEFAULT_OPTION for default icon)
+                JOptionPane.QUESTION_MESSAGE, // Message type (QUESTION_MESSAGE for question)
+                null, // Custom icon (null for default icon)
+                opsi, // Option list
+                opsi[0]); // Default option chosen
 
         System.out.println("Selected Difficulty: " + opsi[pilihan]);
-
-        // If the user cancels the option dialog, exit the program
-        if (pilihan == JOptionPane.CLOSED_OPTION) {
+        // Uses the return value to determine the next action
+        if(pilihan == JOptionPane.CLOSED_OPTION) {
             System.out.println("Dialog ditutup tanpa pemilihan.");
             System.exit(0);
-        }
-
-        updateButtonActions(pilihan);
-
-        
+        } 
         if (opsi[pilihan] == opsi[0]) {
-            board.NewGame(pilihan);
-        } else if (opsi[pilihan] == opsi[1]) {
-            board.NewGame(pilihan);
-        } else if (opsi[pilihan] == opsi[2]) {
-            board.NewGame(pilihan);
+            Container cp = getContentPane();
+            cp.setLayout(new BorderLayout());
+
+            cp.add(board, BorderLayout.CENTER);
+
+            JButton btnNewGameEasy = new JButton("New Game");
+            btnNewGameEasy.addActionListener(e -> board.EasyGame());
+            cp.add(btnNewGameEasy, BorderLayout.SOUTH);
+            
+            JButton btnSolveGame = new JButton("Solve");
+            btnSolveGame.addActionListener(e -> board.SolveGame());
+            cp.add(btnSolve, BorderLayout.SOUTH);
+            difficulty = new JMenuBar();
+
+            // create a menu
+            diffmenu = new JMenu("  Select Difficulty Level  ");
+
+            // create menuitems
+            easy = new JMenuItem("Easy");
+            medium = new JMenuItem("Medium");
+            hard = new JMenuItem("Hard");
+
+            // add menu items to menu
+            diffmenu.add(easy);
+            diffmenu.add(medium);
+            diffmenu.add(hard);
+
+            // add menu to menu bar
+            difficulty.add(diffmenu);
+            buttonPanel.add(difficulty);
+
+            buttonPanel.setLayout(new FlowLayout());
+            buttonPanel.add(btnNewGameEasy);
+            buttonPanel.add(btnSolveGame);
+            cp.add(buttonPanel, BorderLayout.SOUTH);
+
+            board.EasyGame();
+            easy.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.EasyGame();
+                }
+            });
+            medium.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.MediumGame();
+                }
+            });
+            hard.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.HardGame();
+                }
+            });
+            pack();
+            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);  // to handle window-closing
+            addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent a) {
+                         JOptionPane.showMessageDialog(null, "Thank you for playing");
+                         System.exit(0);
+                }
+            });
+            setTitle("Sudoku");
+            setVisible(true);
+        } else if (opsi[pilihan]==opsi[1]){
+            Container cp = getContentPane();
+            cp.setLayout(new BorderLayout());
+
+            cp.add(board, BorderLayout.CENTER);
+
+            // Add a button to the south to re-start the game via board.newGame()
+            JButton btnNewGameMedium = new JButton("New Game");
+            btnNewGameMedium.addActionListener(e -> board.MediumGame()); // Add ActionListener to the button
+            cp.add(btnNewGameMedium, BorderLayout.SOUTH); // Add button to the south
+
+            JButton btnSolveGame = new JButton("Solve");
+            btnSolveGame.addActionListener(e -> board.SolveGame());
+            cp.add(btnSolveGame, BorderLayout.SOUTH);
+            // create a menu
+            diffmenu = new JMenu("  Select Difficulty Level  ");
+
+            // create menuitems
+            easy = new JMenuItem("Easy");
+            medium = new JMenuItem("Medium");
+            hard = new JMenuItem("Hard");
+
+            // add menu items to menu
+            diffmenu.add(easy);
+            diffmenu.add(medium);
+            diffmenu.add(hard);
+
+            // add menu to menu bar
+            difficulty.add(diffmenu);
+            buttonPanel.add(difficulty);
+
+            buttonPanel.setLayout(new FlowLayout());
+            buttonPanel.add(btnNewGameMedium);
+            buttonPanel.add(btnSolveGame);
+            cp.add(buttonPanel, BorderLayout.SOUTH);
+
+            board.EasyGame();
+            easy.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.EasyGame();
+                }
+            });
+            medium.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.MediumGame();
+                }
+            });
+            hard.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.HardGame();
+                }
+            });
+
+            pack();     // Pack the UI components, instead of using setSize()
+            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);  // to handle window-closing
+            addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent a) {
+                         JOptionPane.showMessageDialog(null, "Thank you for playing");
+                         System.exit(0);
+                }
+            });
+            setTitle("Sudoku");
+            setVisible(true);
+        } else if (opsi[pilihan]==opsi[2]){
+            Container cp = getContentPane();
+            cp.setLayout(new BorderLayout());
+
+            cp.add(board, BorderLayout.CENTER);
+
+            // Add a button to the south to re-start the game via board.newGame()
+            JButton btnNewGameHard = new JButton("New Game");
+            btnNewGameHard.addActionListener(e -> board.HardGame()); // Add ActionListener to the button
+            cp.add(btnNewGameHard, BorderLayout.SOUTH); // Add button to the south
+
+            JButton btnSolveGame = new JButton("Solve");
+            btnSolveGame.addActionListener(e -> board.SolveGame());
+            cp.add(btnSolveGame, BorderLayout.SOUTH);
+            // create a menu
+            diffmenu = new JMenu("  Select Difficulty Level  ");
+
+            // create menuitems
+            easy = new JMenuItem("Easy");
+            medium = new JMenuItem("Medium");
+            hard = new JMenuItem("Hard");
+
+            // add menu items to menu
+            diffmenu.add(easy);
+            diffmenu.add(medium);
+            diffmenu.add(hard);
+
+            // add menu to menu bar
+            difficulty.add(diffmenu);
+            buttonPanel.add(difficulty);
+
+            buttonPanel.setLayout(new FlowLayout());
+            buttonPanel.add(btnNewGameHard);
+            buttonPanel.add(btnSolveGame);
+            cp.add(buttonPanel, BorderLayout.SOUTH);
+
+            board.EasyGame();
+            easy.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.EasyGame();
+                }
+            });
+            medium.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.MediumGame();
+                }
+            });
+            hard.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    board.HardGame();
+                }
+            });
+
+            pack();
+            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);  // to handle window-closing
+            addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent a) {
+                         JOptionPane.showMessageDialog(null, "Thank you for playing");
+                         System.exit(0);
+                }
+             });
+           
+            setTitle("Sudoku");
+            setVisible(true);
         }
 
-    
-        pack();
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent a) {
-                JOptionPane.showMessageDialog(null, "Thank you for playing");
-                System.exit(0);
-            }
-        });
-        setTitle("Sudoku");
-        setVisible(true);
     }
 
+    /** The entry main() entry method */
     public static void main(String[] args) {
+        // [TODO 1] Check "Swing program template" on how to run
+        // the constructor of "Main"
         SwingUtilities.invokeLater(() -> {
             try {
                 new Main();
             } catch (Exception e) {
+                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         });
